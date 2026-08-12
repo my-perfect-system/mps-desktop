@@ -1,4 +1,3 @@
----
 argument_specs:
   main:
     short_description: Install rofi launcher + per-user config and 8 boot scripts
@@ -7,48 +6,38 @@ argument_specs:
         type: list
         required: false
         default:
-          - rofi
-        description: "Rofi packages"
+        - rofi
+        description: Rofi packages
       rofi_dotfiles:
         type: list
         required: false
         default:
-          - .config/rofi
-        description: "Per-user rofi dotfile path"
+        - .config/rofi
+        description: Per-user rofi dotfile path
       rofi_themes_dir:
         type: str
         required: false
         default: /usr/share/rofi/themes
-        description: "System-wide rofi themes directory"
+        description: System-wide rofi themes directory
       rofi_themes:
         type: list
         required: false
         default:
-          - rofi-boot-autorandr.rasi
-          - rofi-boot-dwmswitch.rasi
-          - rofi-boot-launcher.rasi
-          - rofi-boot-powermenu.rasi
-        description: "Rofi theme filenames to deploy to rofi_themes_dir"
+        - rofi-boot-autorandr.rasi
+        - rofi-boot-dwmswitch.rasi
+        - rofi-boot-launcher.rasi
+        - rofi-boot-powermenu.rasi
+        description: Rofi theme filenames to deploy to rofi_themes_dir
       rofi_scripts:
         type: list
         required: false
         default:
-          - rofi-boot-launcher.bash
-          - rofi-boot-powermenu.bash
-          - rofi-boot-autorandr.bash
-          - rofi-boot-dwmswitch.bash
-          - rofi-boot-tmux.bash
-          - rofi-boot-tmuxinator.bash
-          - rofi-boot-tmux-sessionizer.bash
-          - rofi-boot-tmux-tmuxinizer.bash
-        description: "Per-user rofi boot scripts to deploy to ~/.local/bin/"
-      users_catalog:
-        type: dict
-        required: false
-        default: {}
-        description: "Identity catalog keyed by unique id - see mps.users.users docs"
-      users_list:
-        type: list
-        required: false
-        default: []
-        description: "List of dicts with 'name' (catalog key) and optional 'state'"
+        - rofi-boot-launcher.bash
+        - rofi-boot-powermenu.bash
+        - rofi-boot-autorandr.bash
+        - rofi-boot-dwmswitch.bash
+        - rofi-boot-tmux.bash
+        - rofi-boot-tmuxinator.bash
+        - rofi-boot-tmux-sessionizer.bash
+        - rofi-boot-tmux-tmuxinizer.bash
+        description: Per-user rofi boot scripts to deploy to ~/.local/bin/

@@ -37,9 +37,6 @@ qtile_wallpapers_dir: /usr/share/images/desktop/wallpaper
 qtile_vpn_admin_host: bks-adm
 qtile_vpn_pub_host: pub-all
 qtile_kanata_state_path: /tmp/kanata.state
-qtile_keepass_bin: keepass2
-qtile_keepass_db_path: ~/mps/secrets/Database.kdbx
-qtile_screenlayout_hive_cmd: ~/.screenlayout/layout_hive.bash
 
 qtile_autostart_keyboard: de
 qtile_autostart_xset_rate: "xset r rate 250 50"
