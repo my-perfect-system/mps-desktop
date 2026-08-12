@@ -1,6 +1,6 @@
 ---
-- name: ROFI - Compute per-user data
-  ansible.builtin.include_tasks: compute.yml
+- name: ROFI - Compute per-user facts
+  ansible.builtin.include_tasks: facts.yml
 - name: "DESK_ROFI_MAIN - Install rofi packages"
   ansible.builtin.include_tasks: install.yml
 

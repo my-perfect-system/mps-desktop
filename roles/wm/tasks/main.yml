@@ -1,6 +1,6 @@
 ---
-- name: WM - Compute per-user data
-  ansible.builtin.include_tasks: compute.yml
+- name: WM - Compute per-user facts
+  ansible.builtin.include_tasks: facts.yml
 - name: "DESK_WM_MAIN - Install window manager packages"
   ansible.builtin.include_tasks: install.yml
 
