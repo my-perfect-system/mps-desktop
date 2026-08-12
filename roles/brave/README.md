@@ -1,10 +1,10 @@
 ---
-namespace: mps
+namespace: odem
 collection: desktop
 role: brave
 ---
 
-# `mps.desktop.brave`
+# `odem.desktop.brave`
 
 Install Brave browser via HTTPS APT repo
 
@@ -26,7 +26,7 @@ None.
 ```yaml
 - hosts: all
   roles:
-    - mps.desktop.brave
+    - odem.desktop.brave
 ```
 
 ## Role metadata

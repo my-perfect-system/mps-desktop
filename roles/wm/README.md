@@ -1,10 +1,10 @@
 ---
-namespace: mps
+namespace: odem
 collection: desktop
 role: wm
 ---
 
-# `mps.desktop.wm`
+# `odem.desktop.wm`
 
 Install window manager deps and per-user dotfiles
 
@@ -12,19 +12,19 @@ Install window manager deps and per-user dotfiles
 
 | Variable | Default | Description |
 |---|---|---|
-| `wm_dotfiles` | `- .config/picom.conf<br>- .config/dunst` | Per-user dotfile paths to copy (dconf config is owned by mps.desktop.essentials) |
+| `wm_dotfiles` | `- .config/picom.conf<br>- .config/dunst` | Per-user dotfile paths to copy (dconf config is owned by odem.desktop.essentials) |
 | `wm_packages` | `[23 items]` | Window manager packages |
 
 ## Dependencies
 
-- `mps.base.identity`
+- `odem.base.identity`
 
 ## Example usage
 
 ```yaml
 - hosts: all
   roles:
-    - mps.desktop.wm
+    - odem.desktop.wm
 ```
 
 ## Role metadata

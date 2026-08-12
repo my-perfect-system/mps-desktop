@@ -1,5 +1,5 @@
 ---
-namespace: mps
+namespace: odem
 name: desktop
 version: 0.3.1
 readme: README.md
@@ -16,11 +16,11 @@ tags:
   - rofi
   - firefox
   - dotfiles
-  - mps
-repository: https://github.com/my-perfect-system/mps-desktop
-documentation: https://github.com/my-perfect-system/mps-desktop
-homepage: https://github.com/my-perfect-system/mps-desktop
-issues: https://github.com/my-perfect-system/mps-desktop/issues
+  - odem
+repository: https://github.com/my-perfect-system/odem-desktop
+documentation: https://github.com/my-perfect-system/odem-desktop
+homepage: https://github.com/my-perfect-system/odem-desktop
+issues: https://github.com/my-perfect-system/odem-desktop/issues
 build_ignore:
   .ansible-lint
   .yamllint
@@ -30,5 +30,5 @@ build_ignore:
   - "*.tar.gz"
   - .ansible
 dependencies:
-  mps.base: ">=0.1.0"
+  odem.base: ">=0.1.0"
   ansible.posix: ">=1.0.0"

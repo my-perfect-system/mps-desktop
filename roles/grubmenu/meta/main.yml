@@ -15,5 +15,5 @@ galaxy_info:
     - desktop
     - grub
     - boot
-    - mps-desktop
+    - odem-desktop
 dependencies: []

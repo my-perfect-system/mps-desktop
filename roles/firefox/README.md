@@ -1,10 +1,10 @@
 ---
-namespace: mps
+namespace: odem
 collection: desktop
 role: firefox
 ---
 
-# `mps.desktop.firefox`
+# `odem.desktop.firefox`
 
 Install Firefox ESR browser
 
@@ -17,7 +17,7 @@ None.
 ```yaml
 - hosts: all
   roles:
-    - mps.desktop.firefox
+    - odem.desktop.firefox
 ```
 
 ## Role metadata

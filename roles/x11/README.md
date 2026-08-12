@@ -1,10 +1,10 @@
 ---
-namespace: mps
+namespace: odem
 collection: desktop
 role: x11
 ---
 
-# `mps.desktop.x11`
+# `odem.desktop.x11`
 
 Install X11 server, mesa, and qtile build dependencies
 
@@ -16,14 +16,14 @@ Install X11 server, mesa, and qtile build dependencies
 
 ## Dependencies
 
-- `mps.base.identity`
+- `odem.base.identity`
 
 ## Example usage
 
 ```yaml
 - hosts: all
   roles:
-    - mps.desktop.x11
+    - odem.desktop.x11
 ```
 
 ## Role metadata

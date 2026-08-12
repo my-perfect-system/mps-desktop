@@ -14,5 +14,5 @@ galaxy_info:
     - trixie
     - desktop
     - firefox
-    - mps-desktop
+    - odem-desktop
 dependencies: []

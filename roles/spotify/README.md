@@ -1,10 +1,10 @@
 ---
-namespace: mps
+namespace: odem
 collection: desktop
 role: spotify
 ---
 
-# `mps.desktop.spotify`
+# `odem.desktop.spotify`
 
 Install Spotify client via HTTPS APT repo
 
@@ -27,7 +27,7 @@ None.
 ```yaml
 - hosts: all
   roles:
-    - mps.desktop.spotify
+    - odem.desktop.spotify
 ```
 
 ## Role metadata

@@ -28,4 +28,4 @@ argument_specs:
         default:
         - .config/picom.conf
         - .config/dunst
-        description: Per-user dotfile paths to copy (dconf config is owned by mps.desktop.essentials)
+        description: Per-user dotfile paths to copy (dconf config is owned by odem.desktop.essentials)

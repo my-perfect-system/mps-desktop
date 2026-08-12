@@ -1,10 +1,10 @@
 ---
-namespace: mps
+namespace: odem
 collection: desktop
 role: lightdm
 ---
 
-# `mps.desktop.lightdm`
+# `odem.desktop.lightdm`
 
 Configure lightdm-gtk-greeter background
 
@@ -14,7 +14,7 @@ Configure lightdm-gtk-greeter background
 |---|---|---|
 | `lightdm_greeter_conf` | `/etc/lightdm/lightdm-gtk-greeter.conf` | Path to the lightdm gtk greeter config file |
 | `lightdm_wallpaper` | `wormhole.jpg` | Wallpaper filename (must be in lightdm_wallpapers_dir) |
-| `lightdm_wallpapers_dir` | `/usr/share/images/desktop/wallpaper` | Directory containing wallpaper images (mps.desktop.essentials deploys this) |
+| `lightdm_wallpapers_dir` | `/usr/share/images/desktop/wallpaper` | Directory containing wallpaper images (odem.desktop.essentials deploys this) |
 
 ## Dependencies
 
@@ -25,7 +25,7 @@ None.
 ```yaml
 - hosts: all
   roles:
-    - mps.desktop.lightdm
+    - odem.desktop.lightdm
 ```
 
 ## Role metadata

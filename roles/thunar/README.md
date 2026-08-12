@@ -1,10 +1,10 @@
 ---
-namespace: mps
+namespace: odem
 collection: desktop
 role: thunar
 ---
 
-# `mps.desktop.thunar`
+# `odem.desktop.thunar`
 
 Install thunar + plugins and per-user dotfiles
 
@@ -18,14 +18,14 @@ Install thunar + plugins and per-user dotfiles
 
 ## Dependencies
 
-- `mps.base.identity`
+- `odem.base.identity`
 
 ## Example usage
 
 ```yaml
 - hosts: all
   roles:
-    - mps.desktop.thunar
+    - odem.desktop.thunar
 ```
 
 ## Role metadata

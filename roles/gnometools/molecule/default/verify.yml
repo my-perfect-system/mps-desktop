@@ -9,4 +9,4 @@
   tasks:
     - name: Converge completed successfully
       ansible.builtin.debug:
-        msg: "Smoke test for mps.desktop.gnometools passed (converge ran without error)."
+        msg: "Smoke test for odem.desktop.gnometools passed (converge ran without error)."

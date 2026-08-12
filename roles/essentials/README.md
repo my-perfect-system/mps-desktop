@@ -1,10 +1,10 @@
 ---
-namespace: mps
+namespace: odem
 collection: desktop
 role: essentials
 ---
 
-# `mps.desktop.essentials`
+# `odem.desktop.essentials`
 
 Install desktop essentials and per-user GTK/gedit/dconf dotfiles
 
@@ -25,14 +25,14 @@ Install desktop essentials and per-user GTK/gedit/dconf dotfiles
 
 ## Dependencies
 
-- `mps.base.identity`
+- `odem.base.identity`
 
 ## Example usage
 
 ```yaml
 - hosts: all
   roles:
-    - mps.desktop.essentials
+    - odem.desktop.essentials
 ```
 
 ## Role metadata

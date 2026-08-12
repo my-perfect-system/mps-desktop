@@ -1,10 +1,10 @@
 ---
-namespace: mps
+namespace: odem
 collection: desktop
 role: plymouth
 ---
 
-# `mps.desktop.plymouth`
+# `odem.desktop.plymouth`
 
 Install Plymouth boot splash theme
 
@@ -25,7 +25,7 @@ None.
 ```yaml
 - hosts: all
   roles:
-    - mps.desktop.plymouth
+    - odem.desktop.plymouth
 ```
 
 ## Role metadata

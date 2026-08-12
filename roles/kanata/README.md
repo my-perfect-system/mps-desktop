@@ -1,10 +1,10 @@
 ---
-namespace: mps
+namespace: odem
 collection: desktop
 role: kanata
 ---
 
-# `mps.desktop.kanata`
+# `odem.desktop.kanata`
 
 Install kanata keyboard remapper + per-user systemd service
 
@@ -24,14 +24,14 @@ Install kanata keyboard remapper + per-user systemd service
 
 ## Dependencies
 
-- `mps.base.identity`
+- `odem.base.identity`
 
 ## Example usage
 
 ```yaml
 - hosts: all
   roles:
-    - mps.desktop.kanata
+    - odem.desktop.kanata
 ```
 
 ## Role metadata

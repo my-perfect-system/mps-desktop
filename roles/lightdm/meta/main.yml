@@ -14,5 +14,5 @@ galaxy_info:
     - trixie
     - desktop
     - lightdm
-    - mps-desktop
+    - odem-desktop
 dependencies: []

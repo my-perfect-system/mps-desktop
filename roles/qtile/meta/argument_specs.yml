@@ -36,7 +36,7 @@ argument_specs:
         required: false
         default: ~/.venvs/qtile
         description: Python venv path for qtile (defaults to ~/.venvs/qtile to avoid
-          collision with mps.terminal.python)
+          collision with odem.terminal.python)
       qtile_xsessions_dir:
         type: str
         required: false
@@ -87,7 +87,7 @@ argument_specs:
         type: str
         required: false
         default: /tmp/kanata.state
-        description: Path to the kanata state file (must match mps.desktop.kanata.kanata_state_path)
+        description: Path to the kanata state file (must match odem.desktop.kanata.kanata_state_path)
       qtile_autostart_keyboard:
         type: str
         required: false

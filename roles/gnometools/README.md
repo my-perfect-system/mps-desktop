@@ -1,10 +1,10 @@
 ---
-namespace: mps
+namespace: odem
 collection: desktop
 role: gnometools
 ---
 
-# `mps.desktop.gnometools`
+# `odem.desktop.gnometools`
 
 Install GNOME desktop tools
 
@@ -17,7 +17,7 @@ None.
 ```yaml
 - hosts: all
   roles:
-    - mps.desktop.gnometools
+    - odem.desktop.gnometools
 ```
 
 ## Role metadata

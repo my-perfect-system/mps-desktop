@@ -14,6 +14,6 @@ galaxy_info:
     - trixie
     - desktop
     - rofi
-    - mps-desktop
+    - odem-desktop
 dependencies:
-  - role: mps.base.identity
+  - role: odem.base.identity

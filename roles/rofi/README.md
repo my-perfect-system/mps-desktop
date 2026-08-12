@@ -1,10 +1,10 @@
 ---
-namespace: mps
+namespace: odem
 collection: desktop
 role: rofi
 ---
 
-# `mps.desktop.rofi`
+# `odem.desktop.rofi`
 
 Install rofi launcher + per-user config and 8 boot scripts
 
@@ -20,14 +20,14 @@ Install rofi launcher + per-user config and 8 boot scripts
 
 ## Dependencies
 
-- `mps.base.identity`
+- `odem.base.identity`
 
 ## Example usage
 
 ```yaml
 - hosts: all
   roles:
-    - mps.desktop.rofi
+    - odem.desktop.rofi
 ```
 
 ## Role metadata

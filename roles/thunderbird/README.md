@@ -1,10 +1,10 @@
 ---
-namespace: mps
+namespace: odem
 collection: desktop
 role: thunderbird
 ---
 
-# `mps.desktop.thunderbird`
+# `odem.desktop.thunderbird`
 
 Install Thunderbird mail client
 
@@ -17,7 +17,7 @@ None.
 ```yaml
 - hosts: all
   roles:
-    - mps.desktop.thunderbird
+    - odem.desktop.thunderbird
 ```
 
 ## Role metadata

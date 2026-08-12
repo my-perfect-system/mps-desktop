@@ -1,10 +1,10 @@
 ---
-namespace: mps
+namespace: odem
 collection: desktop
 role: grubmenu
 ---
 
-# `mps.desktop.grubmenu`
+# `odem.desktop.grubmenu`
 
 Install GRUB boot menu themes
 
@@ -29,7 +29,7 @@ None.
 ```yaml
 - hosts: all
   roles:
-    - mps.desktop.grubmenu
+    - odem.desktop.grubmenu
 ```
 
 ## Role metadata

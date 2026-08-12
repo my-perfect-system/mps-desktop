@@ -12,7 +12,7 @@ argument_specs:
         type: str
         required: false
         default: /usr/share/images/desktop/wallpaper
-        description: "Directory containing wallpaper images (mps.desktop.essentials deploys this)"
+        description: "Directory containing wallpaper images (odem.desktop.essentials deploys this)"
       lightdm_greeter_conf:
         type: str
         required: false

@@ -16,6 +16,6 @@ galaxy_info:
     - wm
     - picom
     - dunst
-    - mps-desktop
+    - odem-desktop
 dependencies:
-  - role: mps.base.identity
+  - role: odem.base.identity
