@@ -22,6 +22,8 @@ documentation: https://github.com/my-perfect-system/mps-desktop
 homepage: https://github.com/my-perfect-system/mps-desktop
 issues: https://github.com/my-perfect-system/mps-desktop/issues
 build_ignore:
+  .ansible-lint
+  .yamllint
   - .git
   - .github
   - .gitignore
