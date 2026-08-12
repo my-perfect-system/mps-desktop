@@ -20,26 +20,26 @@ See [`galaxy.yml`](galaxy.yml) for the canonical values.
 
 | Role | Purpose |
 |---|---|
-| `mps.desktop.firefox` | Firefox apt install. |
-| `mps.desktop.thunderbird` | Thunderbird apt install. |
-| `mps.desktop.brave` | Brave browser (apt repo + signing key). |
-| `mps.desktop.spotify` | Spotify client (apt repo + signing key). |
-| `mps.desktop.lightdm` | LightDM greeter config + wallpaper directory. |
-| `mps.desktop.plymouth` | Plymouth boot theme. |
-| `mps.desktop.grubmenu` | GRUB theme + `/etc/default/grub` + `update-grub`. |
-| `mps.desktop.gnometools` | GNOME tool packages. |
-| `mps.desktop.x11` | X11 base packages. |
+| [`mps.desktop.firefox`](roles/firefox/README.md) | Firefox apt install. |
+| [`mps.desktop.thunderbird`](roles/thunderbird/README.md) | Thunderbird apt install. |
+| [`mps.desktop.brave`](roles/brave/README.md) | Brave browser (apt repo + signing key). |
+| [`mps.desktop.spotify`](roles/spotify/README.md) | Spotify client (apt repo + signing key). |
+| [`mps.desktop.lightdm`](roles/lightdm/README.md) | LightDM greeter config + wallpaper directory. |
+| [`mps.desktop.plymouth`](roles/plymouth/README.md) | Plymouth boot theme. |
+| [`mps.desktop.grubmenu`](roles/grubmenu/README.md) | GRUB theme + `/etc/default/grub` + `update-grub`. |
+| [`mps.desktop.gnometools`](roles/gnometools/README.md) | GNOME tool packages. |
+| [`mps.desktop.x11`](roles/x11/README.md) | X11 base packages. |
 
 ### Window manager + helpers (per-user)
 
 | Role | Purpose |
 |---|---|
-| `mps.desktop.qtile` | Templated qtile config, pip venv + git clone, per-user wallpaper dict. |
-| `mps.desktop.kanata` | Per-user rustup install, udev rules, systemd user service. |
-| `mps.desktop.essentials` | Per-user dotfile copies + facts builders. |
-| `mps.desktop.rofi` | Per-user dotfile + script copies + facts builders. |
-| `mps.desktop.thunar` | Per-user dotfile copies + facts. |
-| `mps.desktop.wm` | Per-user copy loops (gated by `item.src`) + facts. |
+| [`mps.desktop.qtile`](roles/qtile/README.md) | Templated qtile config, pip venv + git clone, per-user wallpaper dict. |
+| [`mps.desktop.kanata`](roles/kanata/README.md) | Per-user rustup install, udev rules, systemd user service. |
+| [`mps.desktop.essentials`](roles/essentials/README.md) | Per-user dotfile copies + facts builders. |
+| [`mps.desktop.rofi`](roles/rofi/README.md) | Per-user dotfile + script copies + facts builders. |
+| [`mps.desktop.thunar`](roles/thunar/README.md) | Per-user dotfile copies + facts. |
+| [`mps.desktop.wm`](roles/wm/README.md) | Per-user copy loops (gated by `item.src`) + facts. |
 
 ## Installation
 
