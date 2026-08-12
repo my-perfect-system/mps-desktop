@@ -6,10 +6,13 @@
     owner: "{{ entity.name }}"
     group: "{{ entity.group | default(entity.name) }}"
     mode: "0600"
-  loop: "{{ kanata_users_present }}"
+  loop: "{{ identity_users_resolved }}"
   loop_control:
     loop_var: entity
     label: "{{ entity.name }}"
+  when:
+    - entity.user_roles.desktop_kanata | default(false)
+    - entity.state == 'present'
 
 - name: "DESK_KANATA_CONFIGURE - Ensure global systemd user dir exists"
   ansible.builtin.file:
@@ -23,10 +26,13 @@
   ansible.builtin.command:
     cmd: loginctl enable-linger {{ entity.name }}
   changed_when: true
-  loop: "{{ kanata_users_present }}"
+  loop: "{{ identity_users_resolved }}"
   loop_control:
     loop_var: entity
     label: "{{ entity.name }}"
+  when:
+    - entity.user_roles.desktop_kanata | default(false)
+    - entity.state == 'present'
 
 - name: "DESK_KANATA_CONFIGURE - Install kanata systemd user service (global)"
   ansible.builtin.copy:

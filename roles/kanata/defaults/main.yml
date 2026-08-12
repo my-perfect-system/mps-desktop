@@ -1,7 +1,5 @@
 ---
 
-users_catalog: {}  # noqa var-naming[no-role-prefix]
-users_list: []  # noqa var-naming[no-role-prefix]
 kanata_cargo_features: cmd
 
 kanata_config_path: ~/.config/kanata/kanata.kbd

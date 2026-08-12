@@ -3,7 +3,7 @@
   ansible.builtin.set_fact:
     thunar_copy_items: >-
       {%- set items = [] -%}
-      {%- for entity in thunar_users_present -%}
+      {%- for entity in identity_users_resolved if entity.state == 'present' and entity.user_roles.desktop_thunar | default(false) -%}
       {%-   for f in thunar_dotfiles -%}
       {%-     set _ = items.append({'entity': entity, 'src': f}) -%}
       {%-   endfor -%}

@@ -3,7 +3,7 @@
   ansible.builtin.set_fact:
     rofi_copy_items: >-
       {%- set items = [] -%}
-      {%- for entity in rofi_users_present -%}
+      {%- for entity in identity_users_resolved if entity.state == 'present' and entity.user_roles.desktop_rofi | default(false) -%}
       {%-   for f in rofi_dotfiles -%}
       {%-     set _ = items.append({'entity': entity, 'src': f}) -%}
       {%-   endfor -%}
@@ -14,7 +14,7 @@
   ansible.builtin.set_fact:
     rofi_script_items: >-
       {%- set items = [] -%}
-      {%- for entity in rofi_users_present -%}
+      {%- for entity in identity_users_resolved if entity.state == 'present' and entity.user_roles.desktop_rofi | default(false) -%}
       {%-   for s in rofi_scripts -%}
       {%-     set _ = items.append({'entity': entity, 'src': s}) -%}
       {%-   endfor -%}
@@ -40,10 +40,13 @@
     owner: "{{ entity.name }}"
     group: "{{ entity.group | default(entity.name) }}"
     mode: "0700"
-  loop: "{{ rofi_users_present }}"
+  loop: "{{ identity_users_resolved }}"
   loop_control:
     loop_var: entity
     label: "{{ entity.name }}"
+  when:
+    - entity.user_roles.desktop_rofi | default(false)
+    - entity.state == 'present'
 
 - name: "DESK_ROFI_CONFIGURE - Copy rofi boot scripts to ~/.local/bin"
   ansible.builtin.copy:

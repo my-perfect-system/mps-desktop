@@ -41,7 +41,7 @@
         'widget_pollfile.py.j2',
         'widget_polltext.py.j2',
       ] -%}
-      {%- for entity in qtile_users_present -%}
+      {%- for entity in identity_users_resolved if entity.state == 'present' and entity.user_roles.desktop_qtile | default(false) -%}
       {%-   for t in templates -%}
       {%-     set _ = items.append({'entity': entity, 'src': 'dotfiles/.config/qtile/' ~ t}) -%}
       {%-   endfor -%}
@@ -52,7 +52,7 @@
   ansible.builtin.set_fact:
     qtile_user_script_items: >-
       {%- set items = [] -%}
-      {%- for entity in qtile_users_present -%}
+      {%- for entity in identity_users_resolved if entity.state == 'present' and entity.user_roles.desktop_qtile | default(false) -%}
       {%-   for s in qtile_user_scripts -%}
       {%-     set _ = items.append({'entity': entity, 'src': s}) -%}
       {%-   endfor -%}
@@ -66,10 +66,13 @@
     owner: "{{ entity.name }}"
     group: "{{ entity.group | default(entity.name) }}"
     mode: "0700"
-  loop: "{{ qtile_users_present }}"
+  loop: "{{ identity_users_resolved }}"
   loop_control:
     loop_var: entity
     label: "{{ entity.name }}"
+  when:
+    - entity.user_roles.desktop_qtile | default(false)
+    - entity.state == 'present'
 
 - name: "DESK_QTILE_CONFIGURE - Ensure ~/.local/bin exists for each user"
   ansible.builtin.file:
@@ -78,10 +81,13 @@
     owner: "{{ entity.name }}"
     group: "{{ entity.group | default(entity.name) }}"
     mode: "0700"
-  loop: "{{ qtile_users_present }}"
+  loop: "{{ identity_users_resolved }}"
   loop_control:
     loop_var: entity
     label: "{{ entity.name }}"
+  when:
+    - entity.user_roles.desktop_qtile | default(false)
+    - entity.state == 'present'
 
 - name: "DESK_QTILE_CONFIGURE - Render qtile Python config from templates"
   ansible.builtin.template:
@@ -101,10 +107,13 @@
     owner: "{{ entity.name }}"
     group: "{{ entity.group | default(entity.name) }}"
     mode: "0700"
-  loop: "{{ qtile_users_present }}"
+  loop: "{{ identity_users_resolved }}"
   loop_control:
     loop_var: entity
     label: "{{ entity.name }}"
+  when:
+    - entity.user_roles.desktop_qtile | default(false)
+    - entity.state == 'present'
   become: true
 
 - name: "DESK_QTILE_CONFIGURE - Render .xsessionrc from template"
@@ -114,10 +123,13 @@
     owner: "{{ entity.name }}"
     group: "{{ entity.group | default(entity.name) }}"
     mode: "0700"
-  loop: "{{ qtile_users_present }}"
+  loop: "{{ identity_users_resolved }}"
   loop_control:
     loop_var: entity
     label: "{{ entity.name }}"
+  when:
+    - entity.user_roles.desktop_qtile | default(false)
+    - entity.state == 'present'
   become: true
 
 - name: "DESK_QTILE_CONFIGURE - Render qtile-autostart-start.bash from template"

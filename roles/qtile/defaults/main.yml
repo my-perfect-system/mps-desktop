@@ -1,7 +1,5 @@
 ---
 
-users_catalog: {}  # noqa var-naming[no-role-prefix]
-users_list: []  # noqa var-naming[no-role-prefix]
 qtile_packages:
   - python3-psutil
   - python3-pip

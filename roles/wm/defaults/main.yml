@@ -1,7 +1,5 @@
 ---
 
-users_catalog: {}  # noqa var-naming[no-role-prefix]
-users_list: []  # noqa var-naming[no-role-prefix]
 wm_packages:
   - feh
   - lxappearance

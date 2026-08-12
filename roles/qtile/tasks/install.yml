@@ -9,36 +9,48 @@
   ansible.builtin.command:
     cmd: sudo -u {{ entity.name }} python3 -m venv "{{ entity.home }}/.venvs/qtile"
     creates: "{{ entity.home }}/.venvs/qtile"
-  loop: "{{ qtile_users_present }}"
+  loop: "{{ identity_users_resolved }}"
   loop_control:
     loop_var: entity
     label: "{{ entity.name }}"
+  when:
+    - entity.user_roles.desktop_qtile | default(false)
+    - entity.state == 'present'
 
 - name: "DESK_QTILE_INSTALL - Clone qtile repo (per user)"
   ansible.builtin.command:
     cmd: sudo -u {{ entity.name }} git clone --single-branch --branch "{{ qtile_repo_version }}" "{{ qtile_repo_url }}" "{{ qtile_repo_dest | regex_replace('^~', entity.home) }}"
     creates: "{{ qtile_repo_dest | regex_replace('^~', entity.home) }}"
-  loop: "{{ qtile_users_present }}"
+  loop: "{{ identity_users_resolved }}"
   loop_control:
     loop_var: entity
     label: "{{ entity.name }}"
+  when:
+    - entity.user_roles.desktop_qtile | default(false)
+    - entity.state == 'present'
 
 - name: "DESK_QTILE_INSTALL - Install qtile into venv (per user)"
   ansible.builtin.command:
     cmd: sudo -u {{ entity.name }} "{{ entity.home }}/.venvs/qtile/bin/pip" install "{{ qtile_repo_dest | regex_replace('^~', entity.home) }}"
     creates: "{{ entity.home }}/.venvs/qtile/bin/qtile"
-  loop: "{{ qtile_users_present }}"
+  loop: "{{ identity_users_resolved }}"
   loop_control:
     loop_var: entity
     label: "{{ entity.name }}"
+  when:
+    - entity.user_roles.desktop_qtile | default(false)
+    - entity.state == 'present'
 
 - name: "DESK_QTILE_INSTALL - Install psutil into venv (per user)"
   ansible.builtin.command:
     cmd: sudo -u {{ entity.name }} "{{ entity.home }}/.venvs/qtile/bin/pip" install psutil
-  loop: "{{ qtile_users_present }}"
+  loop: "{{ identity_users_resolved }}"
   loop_control:
     loop_var: entity
     label: "{{ entity.name }}"
+  when:
+    - entity.user_roles.desktop_qtile | default(false)
+    - entity.state == 'present'
 
 - name: "DESK_QTILE_INSTALL - Fix ownership of qtile venv"
   ansible.builtin.file:
@@ -48,10 +60,13 @@
     group: "{{ entity.group | default(entity.name) }}"
     mode: "0700"
     recurse: true
-  loop: "{{ qtile_users_present }}"
+  loop: "{{ identity_users_resolved }}"
   loop_control:
     loop_var: entity
     label: "{{ entity.name }}"
+  when:
+    - entity.user_roles.desktop_qtile | default(false)
+    - entity.state == 'present'
 
 - name: "DESK_QTILE_INSTALL - Ensure xsessions dir exists"
   ansible.builtin.file:

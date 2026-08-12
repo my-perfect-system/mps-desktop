@@ -1,7 +1,4 @@
 ---
-- name: "DESK_ROFI_MAIN - Resolve users"
-  ansible.builtin.include_tasks: resolve.yml
-
 - name: "DESK_ROFI_MAIN - Install rofi packages"
   ansible.builtin.include_tasks: install.yml
 
