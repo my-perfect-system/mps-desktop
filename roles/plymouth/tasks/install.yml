@@ -1,6 +1,6 @@
 ---
 - name: Install plymouth packages
-  ansible.builtin.apt:
+  ansible.builtin.package:
     name: "{{ plymouth_packages }}"
     state: present
   become: true

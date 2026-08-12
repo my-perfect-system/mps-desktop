@@ -1,6 +1,6 @@
 ---
 - name: Install wm packages
-  ansible.builtin.apt:
+  ansible.builtin.package:
     name: "{{ wm_packages }}"
     state: present
   become: true

@@ -1,6 +1,6 @@
 ---
 - name: Install X11 packages
-  ansible.builtin.apt:
+  ansible.builtin.package:
     name: "{{ x11_packages }}"
     state: present
   become: true

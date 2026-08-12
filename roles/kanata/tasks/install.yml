@@ -1,6 +1,6 @@
 ---
 - name: Install kanata apt packages
-  ansible.builtin.apt:
+  ansible.builtin.package:
     name: "{{ kanata_packages }}"
     state: present
   become: true

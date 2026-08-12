@@ -1,6 +1,6 @@
 ---
 - name: Install qtile apt packages
-  ansible.builtin.apt:
+  ansible.builtin.package:
     name: "{{ qtile_packages }}"
     state: present
   become: true

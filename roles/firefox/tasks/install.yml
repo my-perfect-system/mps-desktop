@@ -1,6 +1,6 @@
 ---
 - name: Install firefox-esr
-  ansible.builtin.apt:
+  ansible.builtin.package:
     name: firefox-esr
     state: present
   become: true

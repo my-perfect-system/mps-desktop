@@ -1,6 +1,6 @@
 ---
 - name: Install spotify package prereqs
-  ansible.builtin.apt:
+  ansible.builtin.package:
     name: "{{ spotify_packages }}"
     state: present
     update_cache: true
@@ -28,7 +28,7 @@
   become: true
 
 - name: Install spotify-client package
-  ansible.builtin.apt:
+  ansible.builtin.package:
     name: spotify-client
     state: present
     update_cache: true

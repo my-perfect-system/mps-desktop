@@ -1,6 +1,6 @@
 ---
 - name: Install brave package prereqs
-  ansible.builtin.apt:
+  ansible.builtin.package:
     name: "{{ brave_packages }}"
     state: present
     update_cache: true
@@ -21,7 +21,7 @@
   become: true
 
 - name: Install Brave browser package
-  ansible.builtin.apt:
+  ansible.builtin.package:
     name: brave-browser
     state: present
     update_cache: true

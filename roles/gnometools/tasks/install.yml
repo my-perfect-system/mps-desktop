@@ -1,6 +1,6 @@
 ---
 - name: Install GNOME tools
-  ansible.builtin.apt:
+  ansible.builtin.package:
     name:
       - gnome-system-monitor
       - network-manager-gnome

@@ -1,18 +1,18 @@
 ---
 - name: Install base desktop packages
-  ansible.builtin.apt:
+  ansible.builtin.package:
     name: "{{ essentials_packages_base }}"
     state: present
   become: true
 
 - name: Install sound stack packages
-  ansible.builtin.apt:
+  ansible.builtin.package:
     name: "{{ essentials_packages_sound }}"
     state: present
   become: true
 
 - name: Install XDG utility packages
-  ansible.builtin.apt:
+  ansible.builtin.package:
     name: "{{ essentials_packages_xdg }}"
     state: present
   become: true

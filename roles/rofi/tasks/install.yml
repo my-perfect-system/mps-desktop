@@ -1,6 +1,6 @@
 ---
 - name: Install rofi and dependencies
-  ansible.builtin.apt:
+  ansible.builtin.package:
     name: "{{ rofi_packages }}"
     state: present
   become: true
