@@ -1,0 +1,6 @@
+---
+- name: "DESK_FIREFOX_INSTALL - Install firefox-esr"
+  ansible.builtin.apt:
+    name: firefox-esr
+    state: present
+  become: true

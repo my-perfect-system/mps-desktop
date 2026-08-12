@@ -1,0 +1,5 @@
+---
+- name: "DESK_BRAVE_CONFIGURE - No per-user configuration for brave"
+  ansible.builtin.debug:
+    msg: "brave role has no per-user configure step"
+  when: false

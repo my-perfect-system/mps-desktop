@@ -1,0 +1,75 @@
+---
+- name: "DESK_GRUBMENU_INSTALL - Ensure themes destination dir exists"
+  ansible.builtin.file:
+    path: "{{ grubmenu_themes_dir }}"
+    state: directory
+    owner: root
+    group: root
+    mode: "0755"
+  become: true
+
+- name: "DESK_GRUBMENU_INSTALL - Copy GRUB themes"
+  ansible.builtin.copy:
+    src: "{{ role_path }}/files/grub/themes/{{ item }}/"
+    dest: "{{ grubmenu_themes_dir }}/{{ item }}/"
+    owner: root
+    group: root
+    mode: preserve
+  loop: "{{ grubmenu_themes }}"
+  become: true
+
+- name: "DESK_GRUBMENU_INSTALL - Ensure icons destination dir exists"
+  ansible.builtin.file:
+    path: "{{ grubmenu_icons_dir }}"
+    state: directory
+    owner: root
+    group: root
+    mode: "0755"
+  become: true
+
+- name: "DESK_GRUBMENU_INSTALL - Copy GRUB icon sets"
+  ansible.builtin.copy:
+    src: "{{ role_path }}/files/grub/icons/{{ item }}/"
+    dest: "{{ grubmenu_icons_dir }}/{{ item }}/"
+    owner: root
+    group: root
+    mode: preserve
+  loop: "{{ grubmenu_icons }}"
+  become: true
+
+- name: "DESK_GRUBMENU_INSTALL - Ensure GRUB_GFXMODE"
+  ansible.builtin.lineinfile:
+    path: /etc/default/grub
+    regexp: "^GRUB_GFXMODE="
+    line: "GRUB_GFXMODE={{ grubmenu_gfxmode }}"
+    state: present
+  become: true
+
+- name: "DESK_GRUBMENU_INSTALL - Ensure GRUB_THEME"
+  ansible.builtin.lineinfile:
+    path: /etc/default/grub
+    regexp: "^GRUB_THEME="
+    line: 'GRUB_THEME="{{ grubmenu_themes_dir }}/{{ grubmenu_default_theme }}/theme.txt"'
+    state: present
+  become: true
+
+- name: "DESK_GRUBMENU_INSTALL - Substitute host in theme.txt"
+  ansible.builtin.lineinfile:
+    path: "{{ grubmenu_themes_dir }}/{{ grubmenu_default_theme }}/theme.txt"
+    regexp: 'text = "Host: CFG_HOST"'
+    line: '  text = "Host: {{ inventory_hostname }}"'
+    state: present
+  become: true
+
+- name: "DESK_GRUBMENU_INSTALL - Substitute version in theme.txt"
+  ansible.builtin.lineinfile:
+    path: "{{ grubmenu_themes_dir }}/{{ grubmenu_default_theme }}/theme.txt"
+    regexp: 'text = "VERSION: CFG_VERSION"'
+    line: '  text = "VERSION: {{ grubmenu_app_version }}"'
+    state: present
+  become: true
+
+- name: "DESK_GRUBMENU_INSTALL - update-grub"
+  ansible.builtin.command: update-grub
+  changed_when: true
+  become: true

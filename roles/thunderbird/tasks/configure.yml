@@ -1,0 +1,5 @@
+---
+- name: "DESK_THUNDERBIRD_CONFIGURE - No per-user configuration for thunderbird"
+  ansible.builtin.debug:
+    msg: "thunderbird role has no per-user configure step"
+  when: false

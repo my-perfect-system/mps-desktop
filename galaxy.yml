@@ -1,0 +1,32 @@
+---
+namespace: mps
+name: desktop
+version: 0.3.0
+readme: README.md
+authors:
+  - foo <bar@baz.com>
+description: Desktop GUI and window manager environment
+license:
+  - GPL-3.0-or-later
+tags:
+  - linux
+  - desktop
+  - x11
+  - qtile
+  - rofi
+  - firefox
+  - dotfiles
+  - mps
+repository: https://github.com/my-perfect-system/mps-desktop
+documentation: https://github.com/my-perfect-system/mps-desktop
+homepage: https://github.com/my-perfect-system/mps-desktop
+issues: https://github.com/my-perfect-system/mps-desktop/issues
+build_ignore:
+  - .git
+  - .github
+  - .gitignore
+  - "*.tar.gz"
+  - .ansible
+dependencies:
+  mps.base: ">=0.1.0"
+  ansible.posix: ">=1.0.0"

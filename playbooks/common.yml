@@ -1,0 +1,16 @@
+---
+- name: Desktop common install
+  hosts: all
+  become: true
+  roles:
+    - role: mps.desktop.x11
+    - role: mps.desktop.gnometools
+    - role: mps.desktop.essentials
+    - role: mps.desktop.grubmenu
+    # - role: mps.desktop.plymouth
+    - role: mps.desktop.wm
+    - role: mps.desktop.lightdm
+    - role: mps.desktop.qtile
+    - role: mps.desktop.rofi
+    - role: mps.desktop.thunar
+    - role: mps.desktop.kanata

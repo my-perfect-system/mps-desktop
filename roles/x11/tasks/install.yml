@@ -1,0 +1,6 @@
+---
+- name: "DESK_X11_INSTALL - Install X11 packages"
+  ansible.builtin.apt:
+    name: "{{ x11_packages }}"
+    state: present
+  become: true

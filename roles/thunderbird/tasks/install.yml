@@ -1,0 +1,6 @@
+---
+- name: "DESK_THUNDERBIRD_INSTALL - Install thunderbird"
+  ansible.builtin.apt:
+    name: thunderbird
+    state: present
+  become: true

@@ -1,0 +1,9 @@
+---
+brave_keyring_path: /usr/share/keyrings/brave-browser-archive-keyring.gpg
+brave_repo_url: https://brave-browser-apt-release.s3.brave.com/
+brave_apt_filename: brave-browser
+brave_packages:
+  - ca-certificates
+  - curl
+  - gnupg
+  - apt-transport-https

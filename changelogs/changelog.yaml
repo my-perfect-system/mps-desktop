@@ -1,0 +1,11 @@
+---
+ancestor: null
+releases:
+  0.2.0:
+    changes:
+      release_summary: "Desktop environment roles for Debian 13 (trixie): X11, Qtile, Rofi, browsers, themes, and per-user dotfiles."
+      minor_changes:
+        - "Initial release with 15 roles covering X11 display server, Qtile WM, Rofi launcher, Thunar file manager, and desktop applications"
+        - "Boot theming via grubmenu (GRUB themes) and plymouth (boot splash)"
+        - "Keyboard remapping via kanata with per-user systemd service"
+        - "per-user configure model following the same catalog/assignment pattern as mps.users and mps.terminal"

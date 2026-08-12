@@ -1,0 +1,4 @@
+---
+lightdm_wallpaper: wormhole.jpg
+lightdm_wallpapers_dir: /usr/share/images/desktop/wallpaper
+lightdm_greeter_conf: /etc/lightdm/lightdm-gtk-greeter.conf

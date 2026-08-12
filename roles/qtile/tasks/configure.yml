@@ -1,0 +1,145 @@
+---
+- name: "DESK_QTILE_CONFIGURE - Build wallpaper dict for globals.py"
+  ansible.builtin.set_fact:
+    qtile_wallpaper_dict: >-
+      {%- set d = {} -%}
+      {%- set keys = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0'] -%}
+      {%- if (qtile_wallpapers | default([]) | length) > 0 -%}
+      {%-   set wp_list = qtile_wallpapers -%}
+      {%- else -%}
+      {%-   set wp_list = essentials_wallpapers_list | default([
+        'wormhole.jpg', 'moon.jpg', 'mountains.jpg', 'zwielicht.jpg',
+        'mainframe.jpg', 'backyard.jpg', 'mobile.jpg', 'xp.jpg',
+        'guitar.jpg', 'vorschlag.jpg']) -%}
+      {%- endif -%}
+      {%- for fn in wp_list -%}
+      {%-   if loop.index0 < (keys | length) -%}
+      {%-     set full_path = qtile_wallpapers_dir ~ '/' ~ fn -%}
+      {%-     set _ = d.update({keys[loop.index0]: full_path}) -%}
+      {%-   endif -%}
+      {%- endfor -%}
+      {{ d }}
+
+- name: "DESK_QTILE_CONFIGURE - Build config template items per user"
+  ansible.builtin.set_fact:
+    qtile_config_template_items: >-
+      {%- set items = [] -%}
+      {%- set templates = [
+        'config.py.j2',
+        'colors.py.j2',
+        'floats.py.j2',
+        'globals.py.j2',
+        'groups.py.j2',
+        'helpers.py.j2',
+        'keybinds.py.j2',
+        'layouts.py.j2',
+        'mousebinds.py.j2',
+        'scratchpad.py.j2',
+        'screens.py.j2',
+        'widget_forticlient.py.j2',
+        'widget_kanata.py.j2',
+        'widget_pollfile.py.j2',
+        'widget_polltext.py.j2',
+      ] -%}
+      {%- for entity in qtile_users_present -%}
+      {%-   for t in templates -%}
+      {%-     set _ = items.append({'entity': entity, 'src': 'dotfiles/.config/qtile/' ~ t}) -%}
+      {%-   endfor -%}
+      {%- endfor -%}
+      {{ items }}
+
+- name: "DESK_QTILE_CONFIGURE - Build user script copy items per user"
+  ansible.builtin.set_fact:
+    qtile_user_script_items: >-
+      {%- set items = [] -%}
+      {%- for entity in qtile_users_present -%}
+      {%-   for s in qtile_user_scripts -%}
+      {%-     set _ = items.append({'entity': entity, 'src': s}) -%}
+      {%-   endfor -%}
+      {%- endfor -%}
+      {{ items }}
+
+- name: "DESK_QTILE_CONFIGURE - Ensure ~/.config/qtile exists for each user"
+  ansible.builtin.file:
+    path: "{{ entity.home }}/.config/qtile"
+    state: directory
+    owner: "{{ entity.name }}"
+    group: "{{ entity.group | default(entity.name) }}"
+    mode: "0700"
+  loop: "{{ qtile_users_present }}"
+  loop_control:
+    loop_var: entity
+    label: "{{ entity.name }}"
+
+- name: "DESK_QTILE_CONFIGURE - Ensure ~/.local/bin exists for each user"
+  ansible.builtin.file:
+    path: "{{ entity.home }}/.local/bin"
+    state: directory
+    owner: "{{ entity.name }}"
+    group: "{{ entity.group | default(entity.name) }}"
+    mode: "0700"
+  loop: "{{ qtile_users_present }}"
+  loop_control:
+    loop_var: entity
+    label: "{{ entity.name }}"
+
+- name: "DESK_QTILE_CONFIGURE - Render qtile Python config from templates"
+  ansible.builtin.template:
+    src: "{{ item.src }}"
+    dest: "{{ item.entity.home }}/.config/qtile/{{ item.src | basename | regex_replace('\\.j2$', '') }}"
+    owner: "{{ item.entity.name }}"
+    group: "{{ item.entity.group | default(item.entity.name) }}"
+    mode: "0600"
+  loop: "{{ qtile_config_template_items }}"
+  loop_control:
+    label: "{{ item.entity.name }}/{{ item.src | basename }}"
+  become: true
+- name: "DESK_QTILE_CONFIGURE - Render .xinitrc from template"
+  ansible.builtin.template:
+    src: "dotfiles/.config/qtile/.xinitrc.j2"
+    dest: "{{ entity.home }}/.xinitrc"
+    owner: "{{ entity.name }}"
+    group: "{{ entity.group | default(entity.name) }}"
+    mode: "0700"
+  loop: "{{ qtile_users_present }}"
+  loop_control:
+    loop_var: entity
+    label: "{{ entity.name }}"
+  become: true
+
+- name: "DESK_QTILE_CONFIGURE - Render .xsessionrc from template"
+  ansible.builtin.template:
+    src: "dotfiles/.config/qtile/.xsessionrc.j2"
+    dest: "{{ entity.home }}/.xsessionrc"
+    owner: "{{ entity.name }}"
+    group: "{{ entity.group | default(entity.name) }}"
+    mode: "0700"
+  loop: "{{ qtile_users_present }}"
+  loop_control:
+    loop_var: entity
+    label: "{{ entity.name }}"
+  become: true
+
+- name: "DESK_QTILE_CONFIGURE - Render qtile-autostart-start.bash from template"
+  ansible.builtin.template:
+    src: "dotfiles/.config/qtile/qtile-autostart-start.bash.j2"
+    dest: "{{ item.entity.home }}/.local/bin/qtile-autostart-start.bash"
+    owner: "{{ item.entity.name }}"
+    group: "{{ item.entity.group | default(item.entity.name) }}"
+    mode: "0700"
+  loop: "{{ qtile_user_script_items | selectattr('src', 'equalto', 'qtile-autostart-start.bash') | list }}"
+  loop_control:
+    label: "{{ item.entity.name }}/qtile-autostart-start.bash"
+  become: true
+
+- name: "DESK_QTILE_CONFIGURE - Copy static qtile user scripts to ~/.local/bin"
+  ansible.builtin.copy:
+    src: "{{ role_path }}/files/scripts/{{ item.src }}"
+    dest: "{{ item.entity.home }}/.local/bin/{{ item.src }}"
+    owner: "{{ item.entity.name }}"
+    group: "{{ item.entity.group | default(item.entity.name) }}"
+    mode: "0700"
+  loop: "{{ qtile_user_script_items | rejectattr('src', 'equalto', 'qtile-autostart-start.bash') | list }}"
+  loop_control:
+    label: "{{ item.entity.name }}/{{ item.src }}"
+  become: true

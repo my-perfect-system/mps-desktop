@@ -1,0 +1,22 @@
+---
+argument_specs:
+  main:
+    short_description: Install Plymouth boot splash theme
+    options:
+      plymouth_packages:
+        type: list
+        required: false
+        default:
+          - plymouth
+          - plymouth-themes
+        description: "Apt packages required for Plymouth"
+      plymouth_themes_dir:
+        type: str
+        required: false
+        default: /usr/share/plymouth/themes
+        description: "System Plymouth themes directory"
+      plymouth_default_theme:
+        type: str
+        required: false
+        default: anon
+        description: "Custom Plymouth theme name (also used as GRUB theme name; should match grubmenu.grubmenu_default_theme)"

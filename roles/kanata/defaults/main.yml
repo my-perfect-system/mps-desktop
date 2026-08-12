@@ -1,0 +1,18 @@
+---
+
+users_catalog: {}  # noqa var-naming[no-role-prefix]
+users_list: []  # noqa var-naming[no-role-prefix]
+kanata_cargo_features: cmd
+
+kanata_config_path: ~/.config/kanata/kanata.kbd
+
+kanata_udev_rule_path: /etc/udev/rules.d/99-kanata-uinput.rules
+kanata_udev_rule_content: |
+  KERNEL=="uinput", MODE="0660", GROUP="uinput", OPTIONS+="static_node=uinput"
+
+kanata_modules_load_path: /etc/modules-load.d/uinput.conf
+kanata_modules_load_content: |
+  uinput
+
+kanata_packages:
+  - udev

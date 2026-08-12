@@ -1,0 +1,9 @@
+---
+- name: "DESK_WM_MAIN - Resolve users"
+  ansible.builtin.include_tasks: resolve.yml
+
+- name: "DESK_WM_MAIN - Install window manager packages"
+  ansible.builtin.include_tasks: install.yml
+
+- name: "DESK_WM_MAIN - Configure per-user wm dotfiles"
+  ansible.builtin.include_tasks: configure.yml

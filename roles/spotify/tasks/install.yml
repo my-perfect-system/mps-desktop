@@ -1,0 +1,35 @@
+---
+- name: "DESK_SPOTIFY_INSTALL - Install prereq packages"
+  ansible.builtin.apt:
+    name: "{{ spotify_packages }}"
+    state: present
+    update_cache: true
+  become: true
+
+- name: "DESK_SPOTIFY_INSTALL - Download Spotify public key"
+  ansible.builtin.get_url:
+    url: "{{ spotify_key_url }}"
+    dest: /tmp/spotify.pub
+    mode: "0644"
+  become: true
+
+- name: "DESK_SPOTIFY_INSTALL - Dearmor Spotify key to keyring"
+  ansible.builtin.command:
+    cmd: "gpg --dearmor --yes -o {{ spotify_keyring_path }} /tmp/spotify.pub"
+    creates: "{{ spotify_keyring_path }}"
+  become: true
+
+- name: "DESK_SPOTIFY_INSTALL - Add Spotify repository"
+  ansible.builtin.apt_repository:
+    repo: "deb [arch=amd64 signed-by={{ spotify_keyring_path }}] {{ spotify_repo_url }} stable non-free"
+    filename: "{{ spotify_apt_filename }}"
+    state: present
+    update_cache: true
+  become: true
+
+- name: "DESK_SPOTIFY_INSTALL - Install spotify-client"
+  ansible.builtin.apt:
+    name: spotify-client
+    state: present
+    update_cache: true
+  become: true

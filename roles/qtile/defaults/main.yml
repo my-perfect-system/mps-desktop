@@ -1,0 +1,74 @@
+---
+
+users_catalog: {}  # noqa var-naming[no-role-prefix]
+users_list: []  # noqa var-naming[no-role-prefix]
+qtile_packages:
+  - python3-psutil
+  - python3-pip
+  - python-dbus-dev
+  - python3-pulsectl
+  - git
+  - bpytop
+  - libpangocairo-1.0-0
+  - lightdm
+  - lightdm-gtk-greeter
+
+qtile_repo_url: https://github.com/qtile/qtile
+qtile_repo_version: v0.31.0
+qtile_repo_dest: ~/venvs/qtile/src
+
+qtile_venv_path: ~/.venvs/qtile
+
+qtile_xsessions_dir: /usr/share/xsessions
+qtile_xsessions_file: qtile.desktop
+qtile_xsessions_path: "{{ qtile_xsessions_dir }}/{{ qtile_xsessions_file }}"
+
+qtile_local_bin_dir: /usr/local/bin
+qtile_local_bin_scripts:
+  - qtile-startup.bash
+  - qtile-reload.bash
+  - qtile-restart.bash
+
+qtile_user_scripts:
+  - qtile-autostart-start.bash
+  - qtile-autostart-stop.bash
+
+qtile_wallpapers: []
+qtile_wallpapers_dir: /usr/share/images/desktop/wallpaper
+
+qtile_vpn_admin_host: bks-adm
+qtile_vpn_pub_host: pub-all
+qtile_kanata_state_path: /tmp/kanata.state
+qtile_keepass_bin: keepass2
+qtile_keepass_db_path: ~/mps/secrets/Database.kdbx
+qtile_screenlayout_hive_cmd: ~/.screenlayout/layout_hive.bash
+
+qtile_autostart_keyboard: de
+qtile_autostart_xset_rate: "xset r rate 250 50"
+qtile_autostart_displays:
+  - name: PRIMARY
+    output: HDMI-1
+    mode: 3840x2160
+    position: 0x0
+    scale: 1.0x1.0
+    primary: true
+  - name: SECONDARY
+    output: DP-1
+    mode: 1920x1080
+    position: 3840x1080
+    scale: 1.6x1.6
+    primary: false
+
+qtile_scratchpad_dropdowns:
+  - name: pavu
+    cmd: pavucontrol
+  - name: term
+    cmd: "kitty bash"
+  - name: calc
+    cmd: galculator
+  - name: htop
+    cmd: "kitty htop"
+  - name: hermes
+    cmd: "kitty ssh dev-hermes chat"
+  - name: opencode
+    cmd: "kitty ssh dev-oc chat"

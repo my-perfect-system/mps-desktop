@@ -1,0 +1,29 @@
+---
+argument_specs:
+  main:
+    short_description: Install Brave browser via HTTPS APT repo
+    options:
+      brave_keyring_path:
+        type: str
+        required: false
+        default: /usr/share/keyrings/brave-browser-archive-keyring.gpg
+        description: "Path to the Brave GPG keyring"
+      brave_repo_url:
+        type: str
+        required: false
+        default: https://brave-browser-apt-release.s3.brave.com/
+        description: "Base URL for Brave APT repository and key"
+      brave_apt_filename:
+        type: str
+        required: false
+        default: brave-browser
+        description: "Filename for the Brave APT source list"
+      brave_packages:
+        type: list
+        required: false
+        default:
+          - ca-certificates
+          - curl
+          - gnupg
+          - apt-transport-https
+        description: "APT packages required to install Brave (prereqs)"

@@ -1,0 +1,58 @@
+---
+- name: "DESK_ROFI_CONFIGURE - Build per-user dotfile copy items"
+  ansible.builtin.set_fact:
+    rofi_copy_items: >-
+      {%- set items = [] -%}
+      {%- for entity in rofi_users_present -%}
+      {%-   for f in rofi_dotfiles -%}
+      {%-     set _ = items.append({'entity': entity, 'src': f}) -%}
+      {%-   endfor -%}
+      {%- endfor -%}
+      {{ items }}
+
+- name: "DESK_ROFI_CONFIGURE - Build per-user script copy items"
+  ansible.builtin.set_fact:
+    rofi_script_items: >-
+      {%- set items = [] -%}
+      {%- for entity in rofi_users_present -%}
+      {%-   for s in rofi_scripts -%}
+      {%-     set _ = items.append({'entity': entity, 'src': s}) -%}
+      {%-   endfor -%}
+      {%- endfor -%}
+      {{ items }}
+
+- name: "DESK_ROFI_CONFIGURE - Copy rofi dotfiles"
+  ansible.builtin.copy:
+    src: "{{ role_path }}/files/dotfiles/{{ item.src }}"
+    dest: "{{ item.entity.home }}/{{ item.src }}"
+    owner: "{{ item.entity.name }}"
+    group: "{{ item.entity.group | default(item.entity.name) }}"
+    mode: "0700"
+  loop: "{{ rofi_copy_items }}"
+  loop_control:
+    label: "{{ item.entity.name }}/{{ item.src }}"
+  become: true
+
+- name: "DESK_ROFI_CONFIGURE - Ensure ~/.local/bin exists for each user"
+  ansible.builtin.file:
+    path: "{{ entity.home }}/.local/bin"
+    state: directory
+    owner: "{{ entity.name }}"
+    group: "{{ entity.group | default(entity.name) }}"
+    mode: "0700"
+  loop: "{{ rofi_users_present }}"
+  loop_control:
+    loop_var: entity
+    label: "{{ entity.name }}"
+
+- name: "DESK_ROFI_CONFIGURE - Copy rofi boot scripts to ~/.local/bin"
+  ansible.builtin.copy:
+    src: "{{ role_path }}/files/scripts/{{ item.src }}"
+    dest: "{{ item.entity.home }}/.local/bin/{{ item.src }}"
+    owner: "{{ item.entity.name }}"
+    group: "{{ item.entity.group | default(item.entity.name) }}"
+    mode: "0700"
+  loop: "{{ rofi_script_items }}"
+  loop_control:
+    label: "{{ item.entity.name }}/{{ item.src }}"
+  become: true

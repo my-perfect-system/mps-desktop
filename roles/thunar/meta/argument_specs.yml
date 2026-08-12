@@ -1,0 +1,41 @@
+---
+argument_specs:
+  main:
+    short_description: Install thunar + plugins and per-user dotfiles
+    options:
+      thunar_packages:
+        type: list
+        required: false
+        default:
+          - thunar
+          - thunar-archive-plugin
+          - thunar-media-tags-plugin
+          - thunar-volman
+          - thunar-gtkhash
+          - thunarx-python
+        description: "Thunar core + plugin packages"
+      thunar_xfce_packages:
+        type: list
+        required: false
+        default:
+          - xfce4-goodies
+          - xfce4-places-plugin
+          - thunar-font-manager
+        description: "XFCE4 packages used by thunar"
+      thunar_dotfiles:
+        type: list
+        required: false
+        default:
+          - .config/Thunar
+          - .config/xfce4
+        description: "Per-user dotfile paths to copy"
+      users_catalog:
+        type: dict
+        required: false
+        default: {}
+        description: "Identity catalog keyed by unique id - see mps.users.users docs"
+      users_list:
+        type: list
+        required: false
+        default: []
+        description: "List of dicts with 'name' (catalog key) and optional 'state'"

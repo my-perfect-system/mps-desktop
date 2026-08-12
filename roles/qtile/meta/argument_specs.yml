@@ -1,0 +1,168 @@
+---
+argument_specs:
+  main:
+    short_description: Install qtile + per-user templated Python config
+    options:
+      qtile_packages:
+        type: list
+        required: false
+        default:
+          - python3-psutil
+          - python3-pip
+          - python-dbus-dev
+          - python3-pulsectl
+          - git
+          - bpytop
+          - libpangocairo-1.0-0
+          - lightdm
+          - lightdm-gtk-greeter
+        description: "Qtile apt dependencies"
+      qtile_repo_url:
+        type: str
+        required: false
+        default: https://github.com/qtile/qtile
+        description: "Git URL of the qtile repository"
+      qtile_repo_version:
+        type: str
+        required: false
+        default: v0.31.0
+        description: "Git ref (tag/branch) of the qtile repository to clone"
+      qtile_repo_dest:
+        type: str
+        required: false
+        default: ~/venvs/qtile/src
+        description: "Per-user path to clone the qtile repo (use ~ for home dir)"
+      qtile_venv_path:
+        type: str
+        required: false
+        default: ~/.venvs/qtile
+        description: "Python venv path for qtile (defaults to ~/.venvs/qtile to avoid collision with mps.terminal.python)"
+      qtile_xsessions_dir:
+        type: str
+        required: false
+        default: /usr/share/xsessions
+        description: "Xsession .desktop file directory"
+      qtile_xsessions_file:
+        type: str
+        required: false
+        default: qtile.desktop
+        description: "Xsession .desktop file name"
+      qtile_xsessions_path:
+        type: str
+        required: false
+        default: "{{ qtile_xsessions_dir }}/{{ qtile_xsessions_file }}"
+        description: "Full destination path for the xsession .desktop file (derived from dir+file)"
+      qtile_local_bin_dir:
+        type: str
+        required: false
+        default: /usr/local/bin
+        description: "System-wide bin dir for qtile scripts"
+      qtile_local_bin_scripts:
+        type: list
+        required: false
+        default:
+          - qtile-startup.bash
+          - qtile-reload.bash
+          - qtile-restart.bash
+        description: "Qtile scripts to deploy to /usr/local/bin/"
+      qtile_user_scripts:
+        type: list
+        required: false
+        default:
+          - qtile-autostart-start.bash
+          - qtile-autostart-stop.bash
+        description: "Qtile scripts to deploy to ~/.local/bin/ (per-user)"
+      qtile_vpn_admin_host:
+        type: str
+        required: false
+        default: bks-adm
+        description: "Hostname of the admin VPN connection (FortiClient widget)"
+      qtile_vpn_pub_host:
+        type: str
+        required: false
+        default: pub-all
+        description: "Hostname of the public VPN connection (FortiClient widget)"
+      qtile_kanata_state_path:
+        type: str
+        required: false
+        default: /tmp/kanata.state
+        description: "Path to the kanata state file (must match mps.desktop.kanata.kanata_state_path)"
+      qtile_keepass_bin:
+        type: str
+        required: false
+        default: keepass2
+        description: "Keepass binary for the launcher keybind"
+      qtile_keepass_db_path:
+        type: str
+        required: false
+        default: ~/mps/secrets/Database.kdbx
+        description: "Path to the keepass database"
+      qtile_screenlayout_hive_cmd:
+        type: str
+        required: false
+        default: ~/.screenlayout/layout_hive.bash
+        description: "Path to autorandr screenlayout script"
+      qtile_autostart_keyboard:
+        type: str
+        required: false
+        default: de
+        description: "Keyboard layout for setxkbmap in qtile-autostart-start.bash"
+      qtile_autostart_xset_rate:
+        type: str
+        required: false
+        default: "xset r rate 250 50"
+        description: "xset rate command for qtile-autostart-start.bash"
+      qtile_autostart_displays:
+        type: list
+        required: false
+        default:
+          - name: PRIMARY
+            output: HDMI-1
+            mode: 3840x2160
+            position: 0x0
+            scale: 1.0x1.0
+            primary: true
+          - name: SECONDARY
+            output: DP-1
+            mode: 1920x1080
+            position: 3840x1080
+            scale: 1.6x1.6
+            primary: false
+        description: "Display list for xrandr in qtile-autostart-start.bash"
+      qtile_scratchpad_dropdowns:
+        type: list
+        required: false
+        default:
+          - name: pavu
+            cmd: pavucontrol
+          - name: term
+            cmd: "kitty bash"
+          - name: calc
+            cmd: galculator
+          - name: htop
+            cmd: "kitty htop"
+          - name: hermes
+            cmd: "kitty ssh dev-hermes chat"
+          - name: opencode
+            cmd: "kitty ssh dev-oc chat"
+        description: "Scratchpad DropDown definitions for qtile-scratchpad.py"
+      qtile_wallpapers:
+        type: list
+        required: false
+        default: []
+        description: "List of wallpaper filenames. If empty, falls back to essentials_wallpapers_list. Keys are mapped 1-0."
+      qtile_wallpapers_dir:
+        type: str
+        required: false
+        default: /usr/share/images/desktop/wallpaper
+        description: "Directory where wallpaper images are deployed (used for building qtile wallpaper dict)"
+      users_catalog:
+        type: dict
+        required: false
+        default: {}
+        description: "Identity catalog keyed by unique id - see mps.users.users docs"
+      users_list:
+        type: list
+        required: false
+        default: []
+        description: "List of dicts with 'name' (catalog key) and optional 'state'"

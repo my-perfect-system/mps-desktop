@@ -1,0 +1,26 @@
+---
+
+users_catalog: {}  # noqa var-naming[no-role-prefix]
+users_list: []  # noqa var-naming[no-role-prefix]
+rofi_packages:
+  - rofi
+
+rofi_dotfiles:
+  - .config/rofi
+
+rofi_themes_dir: /usr/share/rofi/themes
+rofi_themes:
+  - rofi-boot-autorandr.rasi
+  - rofi-boot-dwmswitch.rasi
+  - rofi-boot-launcher.rasi
+  - rofi-boot-powermenu.rasi
+
+rofi_scripts:
+  - rofi-boot-launcher.bash
+  - rofi-boot-powermenu.bash
+  - rofi-boot-autorandr.bash
+  - rofi-boot-dwmswitch.bash
+  - rofi-boot-tmux.bash
+  - rofi-boot-tmuxinator.bash
+  - rofi-boot-tmux-sessionizer.bash
+  - rofi-boot-tmux-tmuxinizer.bash

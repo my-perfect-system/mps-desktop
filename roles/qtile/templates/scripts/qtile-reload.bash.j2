@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+export DISPLAY=:0
+QTILE_PROC="$HOME/{{ qtile_venv_path | regex_replace('^~/', '') }}/bin/qtile"
+sh -c "$QTILE_PROC cmd-obj -o cmd -f reload_config"

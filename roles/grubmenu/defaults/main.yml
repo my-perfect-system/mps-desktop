@@ -1,0 +1,15 @@
+---
+grubmenu_themes_dir: /boot/grub/themes
+grubmenu_icons_dir: /boot/grub/icons
+
+grubmenu_default_theme: anon
+
+grubmenu_themes:
+  - anon
+  - showroom
+
+grubmenu_icons:
+  - light
+
+grubmenu_gfxmode: 1920x1080
+grubmenu_app_version: "1.0"

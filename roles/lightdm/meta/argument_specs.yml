@@ -1,0 +1,20 @@
+---
+argument_specs:
+  main:
+    short_description: Configure lightdm-gtk-greeter background
+    options:
+      lightdm_wallpaper:
+        type: str
+        required: false
+        default: wormhole.jpg
+        description: "Wallpaper filename (must be in lightdm_wallpapers_dir)"
+      lightdm_wallpapers_dir:
+        type: str
+        required: false
+        default: /usr/share/images/desktop/wallpaper
+        description: "Directory containing wallpaper images (mps.desktop.essentials deploys this)"
+      lightdm_greeter_conf:
+        type: str
+        required: false
+        default: /etc/lightdm/lightdm-gtk-greeter.conf
+        description: "Path to the lightdm gtk greeter config file"

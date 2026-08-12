@@ -1,0 +1,30 @@
+from libqtile.config import ScratchPad, DropDown
+from globals import tm
+
+
+class MpsScratchpad(object):
+    def init_scratchpad(self):
+        # Configuration
+        height = 0.9
+        y_pos = 0.05
+        warp_pointer = False
+        on_focus_lost_hide = True
+        opacity = 1
+        cfgPad = {
+            "opacity": opacity,
+            "on_focus_lost_hide": on_focus_lost_hide,
+            "height": height,
+            "y": y_pos,
+            "warp_pointer": warp_pointer,
+        }
+
+        return (
+            ScratchPad(
+                "scratchpad",
+                [
+{% for dd in qtile_scratchpad_dropdowns %}
+                    DropDown("{{ dd.name }}", "{{ dd.cmd }}", **cfgPad),
+{% endfor %}
+                ],
+            ),
+        )

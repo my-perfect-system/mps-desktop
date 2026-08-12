@@ -1,0 +1,20 @@
+---
+
+users_catalog: {}  # noqa var-naming[no-role-prefix]
+users_list: []  # noqa var-naming[no-role-prefix]
+thunar_packages:
+  - thunar
+  - thunar-archive-plugin
+  - thunar-media-tags-plugin
+  - thunar-volman
+  - thunar-gtkhash
+  - thunarx-python
+
+thunar_xfce_packages:
+  - xfce4-goodies
+  - xfce4-places-plugin
+  - thunar-font-manager
+
+thunar_dotfiles:
+  - .config/Thunar
+  - .config/xfce4

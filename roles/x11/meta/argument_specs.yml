@@ -1,0 +1,21 @@
+---
+argument_specs:
+  main:
+    short_description: Install X11 server, mesa, and qtile build dependencies
+    options:
+      x11_packages:
+        type: list
+        required: false
+        default:
+          - xorg
+          - xserver-xorg-video-nouveau
+          - xserver-xorg-video-vesa
+          - xterm
+          - mesa-utils
+          - freeglut3-dev
+          - libglm-dev
+          - libao-dev
+          - libxinerama-dev
+          - libxft-dev
+          - libglu1-mesa-dev
+        description: "List of apt packages to install for X11 stack"

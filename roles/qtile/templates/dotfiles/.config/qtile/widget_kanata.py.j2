@@ -1,0 +1,28 @@
+"""Shows Kanata modes"""
+
+from widget_polltext import Mode
+from widget_pollfile import WidgetPollFile
+from colors import lightRed, lightGreen, lightBlue, lightViolet, lightGray, fontBlack
+
+DEFAULT_KANATA_MODES = [
+    Mode("Base", "Base", lightGreen, fontBlack),
+    Mode("Layers", "Layers", lightViolet, fontBlack),
+    Mode("Arrows", "Arrows", lightBlue, fontBlack),
+    Mode("Mouse", "Mouse", lightBlue, fontBlack),
+    Mode("App", "App", lightRed, fontBlack),
+    Mode("Macro", "Macro", lightRed, fontBlack),
+    Mode("Inactive", "Inactive", lightGray, fontBlack),
+]
+
+
+class WidgetKanata(WidgetPollFile):
+    """Polls file to update kanata state"""
+
+    def __init__(
+        self,
+        name: str,
+        file: str,
+        modes: list[Mode] = DEFAULT_KANATA_MODES,
+        **kwargs,
+    ):
+        super().__init__(name, file, modes, **kwargs)

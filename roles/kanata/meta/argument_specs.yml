@@ -1,0 +1,53 @@
+---
+argument_specs:
+  main:
+    short_description: Install kanata keyboard remapper + per-user systemd service
+    options:
+      kanata_cargo_features:
+        type: str
+        required: false
+        default: cmd
+        description: "Cargo features for kanata (e.g. 'cmd', 'passthru_ahk')"
+      kanata_config_path:
+        type: str
+        required: false
+        default: ~/.config/kanata/kanata.kbd
+        description: "Per-user kanata config path (use `~` for home dir)"
+      kanata_udev_rule_path:
+        type: str
+        required: false
+        default: /etc/udev/rules.d/99-kanata-uinput.rules
+        description: "Path to install the udev rule for uinput"
+      kanata_udev_rule_content:
+        type: str
+        required: false
+        default: |
+          KERNEL=="uinput", MODE="0660", GROUP="uinput", OPTIONS+="static_node=uinput"
+        description: "Content of the udev rule for uinput"
+      kanata_modules_load_path:
+        type: str
+        required: false
+        default: /etc/modules-load.d/uinput.conf
+        description: "Path to install the modules-load config for uinput"
+      kanata_modules_load_content:
+        type: str
+        required: false
+        default: |
+          uinput
+        description: "Content of the modules-load config for uinput"
+      kanata_packages:
+        type: list
+        required: false
+        default:
+          - udev
+        description: "Apt packages required for kanata (uinput group, udev rules)"
+      users_catalog:
+        type: dict
+        required: false
+        default: {}
+        description: "Identity catalog keyed by unique id - see mps.users.users docs"
+      users_list:
+        type: list
+        required: false
+        default: []
+        description: "List of dicts with 'name' (catalog key) and optional 'state'"

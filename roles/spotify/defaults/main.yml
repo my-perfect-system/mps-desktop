@@ -1,0 +1,10 @@
+---
+spotify_key_url: https://download.spotify.com/debian/pubkey_5384CE82BA52C83A.asc
+spotify_repo_url: https://repository.spotify.com
+spotify_keyring_path: /etc/apt/trusted.gpg.d/spotify.gpg
+spotify_apt_filename: spotify
+spotify_packages:
+  - ca-certificates
+  - curl
+  - gnupg
+  - apt-transport-https

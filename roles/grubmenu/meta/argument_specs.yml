@@ -1,0 +1,43 @@
+---
+argument_specs:
+  main:
+    short_description: Install GRUB boot menu themes
+    options:
+      grubmenu_themes_dir:
+        type: str
+        required: false
+        default: /boot/grub/themes
+        description: "Destination directory for GRUB themes"
+      grubmenu_icons_dir:
+        type: str
+        required: false
+        default: /boot/grub/icons
+        description: "Destination directory for GRUB icons"
+      grubmenu_default_theme:
+        type: str
+        required: false
+        default: anon
+        description: "Default GRUB theme (must be a dir under grubmenu_themes_dir)"
+      grubmenu_themes:
+        type: list
+        required: false
+        default:
+          - anon
+          - showroom
+        description: "List of theme directory names (relative to files/grub/themes/) to deploy"
+      grubmenu_icons:
+        type: list
+        required: false
+        default:
+          - light
+        description: "List of icon set directory names (relative to files/grub/icons/) to deploy"
+      grubmenu_gfxmode:
+        type: str
+        required: false
+        default: 1920x1080
+        description: "Value to set for GRUB_GFXMODE in /etc/default/grub"
+      grubmenu_app_version:
+        type: str
+        required: false
+        default: "1.0"
+        description: "Version string to substitute in theme.txt (replaces CFG_VERSION placeholder)"

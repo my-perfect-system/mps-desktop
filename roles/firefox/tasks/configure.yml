@@ -1,0 +1,5 @@
+---
+- name: "DESK_FIREFOX_CONFIGURE - No per-user configuration for firefox"
+  ansible.builtin.debug:
+    msg: "firefox role has no per-user configure step"
+  when: false

@@ -1,0 +1,98 @@
+---
+argument_specs:
+  main:
+    short_description: Install desktop essentials and per-user GTK/gedit/dconf dotfiles
+    options:
+      essentials_packages_base:
+        type: list
+        required: false
+        default:
+          - galculator
+          - arandr
+          - iw
+          - xcwd
+          - espeak
+          - lxde-icon-theme
+          - thunderbird
+          - firefox-esr
+          - evince
+          - autorandr
+          - ddcutil
+        description: "Base desktop packages"
+      essentials_packages_sound:
+        type: list
+        required: false
+        default:
+          - pulseaudio
+          - pavucontrol
+          - volumeicon-alsa
+          - vorbis-tools
+          - libmpg123-dev
+        description: "Sound stack packages"
+      essentials_packages_xdg:
+        type: list
+        required: false
+        default:
+          - xdg-utils
+          - xdg-user-dirs
+        description: "XDG utilities packages"
+      essentials_dotfiles_gtk:
+        type: list
+        required: false
+        default:
+          - .gtkrc-2.0
+          - .config/gtk-2.0
+          - .config/gtk-3.0
+        description: "GTK2/GTK3 dotfiles to copy per-user"
+      essentials_dotfiles_gedit:
+        type: list
+        required: false
+        default:
+          - .config/gedit
+        description: "gedit config to copy per-user"
+      essentials_dotfiles_dconf:
+        type: list
+        required: false
+        default:
+          - .config/dconf
+        description: "dconf config to copy per-user"
+      essentials_bootsplash_src:
+        type: str
+        required: false
+        default: bootsplash.png
+        description: "Bootsplash image filename (relative to files/dotfiles/images/)"
+      essentials_bootsplash_dst:
+        type: str
+        required: false
+        default: /usr/share/images/desktop/bootsplash.png
+        description: "Destination path for the bootsplash image"
+      essentials_wallpapers_dir:
+        type: str
+        required: false
+        default: /usr/share/images/desktop/wallpaper
+        description: "Destination directory for wallpaper images"
+      essentials_wallpapers_list:
+        type: list
+        required: false
+        default:
+          - wormhole.jpg
+          - moon.jpg
+          - mountains.jpg
+          - zwielicht.jpg
+          - mainframe.jpg
+          - backyard.jpg
+          - mobile.jpg
+          - xp.jpg
+          - guitar.jpg
+          - vorschlag.jpg
+        description: "List of wallpaper filenames to deploy (from files/dotfiles/wallpaper/)"
+      users_catalog:
+        type: dict
+        required: false
+        default: {}
+        description: "Identity catalog keyed by unique id - see mps.users.users docs"
+      users_list:
+        type: list
+        required: false
+        default: []
+        description: "List of dicts with 'name' (catalog key) and optional 'state'"

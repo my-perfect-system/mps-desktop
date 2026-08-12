@@ -1,0 +1,118 @@
+---
+- name: "DESK_QTILE_INSTALL - Install qtile apt packages"
+  ansible.builtin.apt:
+    name: "{{ qtile_packages }}"
+    state: present
+  become: true
+
+- name: "DESK_QTILE_INSTALL - Create qtile venv + clone source (per user)"
+  ansible.builtin.command:
+    cmd: sudo -u {{ entity.name }} python3 -m venv "{{ entity.home }}/.venvs/qtile"
+    creates: "{{ entity.home }}/.venvs/qtile"
+  loop: "{{ qtile_users_present }}"
+  loop_control:
+    loop_var: entity
+    label: "{{ entity.name }}"
+
+- name: "DESK_QTILE_INSTALL - Clone qtile repo (per user)"
+  ansible.builtin.command:
+    cmd: sudo -u {{ entity.name }} git clone --single-branch --branch "{{ qtile_repo_version }}" "{{ qtile_repo_url }}" "{{ qtile_repo_dest | regex_replace('^~', entity.home) }}"
+    creates: "{{ qtile_repo_dest | regex_replace('^~', entity.home) }}"
+  loop: "{{ qtile_users_present }}"
+  loop_control:
+    loop_var: entity
+    label: "{{ entity.name }}"
+
+- name: "DESK_QTILE_INSTALL - Install qtile into venv (per user)"
+  ansible.builtin.command:
+    cmd: sudo -u {{ entity.name }} "{{ entity.home }}/.venvs/qtile/bin/pip" install "{{ qtile_repo_dest | regex_replace('^~', entity.home) }}"
+    creates: "{{ entity.home }}/.venvs/qtile/bin/qtile"
+  loop: "{{ qtile_users_present }}"
+  loop_control:
+    loop_var: entity
+    label: "{{ entity.name }}"
+
+- name: "DESK_QTILE_INSTALL - Install psutil into venv (per user)"
+  ansible.builtin.command:
+    cmd: sudo -u {{ entity.name }} "{{ entity.home }}/.venvs/qtile/bin/pip" install psutil
+  loop: "{{ qtile_users_present }}"
+  loop_control:
+    loop_var: entity
+    label: "{{ entity.name }}"
+
+- name: "DESK_QTILE_INSTALL - Fix ownership of qtile venv"
+  ansible.builtin.file:
+    path: "{{ entity.home }}/.venvs/qtile"
+    state: directory
+    owner: "{{ entity.name }}"
+    group: "{{ entity.group | default(entity.name) }}"
+    mode: "0700"
+    recurse: true
+  loop: "{{ qtile_users_present }}"
+  loop_control:
+    loop_var: entity
+    label: "{{ entity.name }}"
+
+- name: "DESK_QTILE_INSTALL - Ensure xsessions dir exists"
+  ansible.builtin.file:
+    path: "{{ qtile_xsessions_dir }}"
+    state: directory
+    owner: root
+    group: root
+    mode: "0755"
+  become: true
+
+- name: "DESK_QTILE_INSTALL - Copy xsession .desktop file"
+  ansible.builtin.copy:
+    src: "{{ role_path }}/files/etc/qtile.desktop"
+    dest: "{{ qtile_xsessions_path }}"
+    owner: root
+    group: root
+    mode: "0644"
+  become: true
+
+- name: "DESK_QTILE_INSTALL - Ensure /usr/local/bin exists"
+  ansible.builtin.file:
+    path: "{{ qtile_local_bin_dir }}"
+    state: directory
+    owner: root
+    group: root
+    mode: "0755"
+  become: true
+
+- name: "DESK_QTILE_INSTALL - Copy qtile scripts to /usr/local/bin"
+  ansible.builtin.copy:
+    src: "{{ role_path }}/files/scripts/{{ item }}"
+    dest: "{{ qtile_local_bin_dir }}/{{ item }}"
+    owner: root
+    group: root
+    mode: "0755"
+  loop: "{{ qtile_local_bin_scripts | difference(['qtile-startup.bash', 'qtile-reload.bash', 'qtile-restart.bash']) }}"
+  become: true
+
+- name: "DESK_QTILE_INSTALL - Render qtile-startup.bash template"
+  ansible.builtin.template:
+    src: "{{ role_path }}/templates/scripts/qtile-startup.bash.j2"
+    dest: "{{ qtile_local_bin_dir }}/qtile-startup.bash"
+    owner: root
+    group: root
+    mode: "0755"
+  become: true
+
+- name: "DESK_QTILE_INSTALL - Render qtile-reload.bash template"
+  ansible.builtin.template:
+    src: "{{ role_path }}/templates/scripts/qtile-reload.bash.j2"
+    dest: "{{ qtile_local_bin_dir }}/qtile-reload.bash"
+    owner: root
+    group: root
+    mode: "0755"
+  become: true
+
+- name: "DESK_QTILE_INSTALL - Render qtile-restart.bash template"
+  ansible.builtin.template:
+    src: "{{ role_path }}/templates/scripts/qtile-restart.bash.j2"
+    dest: "{{ qtile_local_bin_dir }}/qtile-restart.bash"
+    owner: root
+    group: root
+    mode: "0755"
+  become: true

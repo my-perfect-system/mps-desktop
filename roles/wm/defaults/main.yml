@@ -1,0 +1,32 @@
+---
+
+users_catalog: {}  # noqa var-naming[no-role-prefix]
+users_list: []  # noqa var-naming[no-role-prefix]
+wm_packages:
+  - feh
+  - lxappearance
+  - lightdm
+  - picom
+  - xscreensaver
+  - xscreensaver-data-extra
+  - xscreensaver-gl
+  - xscreensaver-screensaver-bsod
+  - x11-utils 
+  - xinit 
+  - x11-xserver-utils
+  - xserver-xorg-video-amdgpu 
+  - xserver-xorg-video-nvidia 
+  - xserver-xorg-video-intel 
+  - mesa-va-drivers 
+  - mesa-vulkan-drivers
+  - lxlock
+  - xbacklight
+  - numlockx
+  - xclip
+  - dconf-cli
+  - dconf-editor
+  - dunst
+
+wm_dotfiles:
+  - .config/picom.conf
+  - .config/dunst

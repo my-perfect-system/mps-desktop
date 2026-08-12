@@ -1,0 +1,6 @@
+---
+- name: "DESK_WM_INSTALL - Install window manager packages"
+  ansible.builtin.apt:
+    name: "{{ wm_packages }}"
+    state: present
+  become: true

@@ -1,0 +1,5 @@
+---
+- name: "DESK_GNOMETOOLS_CONFIGURE - No per-user configuration for gnometools"
+  ansible.builtin.debug:
+    msg: "gnometools role has no per-user configure step"
+  when: false

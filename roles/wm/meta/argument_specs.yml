@@ -1,0 +1,42 @@
+---
+argument_specs:
+  main:
+    short_description: Install window manager deps and per-user dotfiles
+    options:
+      wm_packages:
+        type: list
+        required: false
+        default:
+          - feh
+          - lxappearance
+          - lightdm
+          - picom
+          - xscreensaver
+          - xscreensaver-data-extra
+          - xscreensaver-gl
+          - xscreensaver-screensaver-bsod
+          - lxlock
+          - xbacklight
+          - numlockx
+          - xclip
+          - dconf-cli
+          - dconf-editor
+          - dunst
+        description: "Window manager packages"
+      wm_dotfiles:
+        type: list
+        required: false
+        default:
+          - .config/picom.conf
+          - .config/dunst
+        description: "Per-user dotfile paths to copy (dconf config is owned by mps.desktop.essentials)"
+      users_catalog:
+        type: dict
+        required: false
+        default: {}
+        description: "Identity catalog keyed by unique id - see mps.users.users docs"
+      users_list:
+        type: list
+        required: false
+        default: []
+        description: "List of dicts with 'name' (catalog key) and optional 'state'"

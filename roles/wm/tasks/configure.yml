@@ -1,0 +1,37 @@
+---
+- name: "DESK_WM_CONFIGURE - Build copy tasks per user"
+  ansible.builtin.set_fact:
+    wm_copy_items: >-
+      {%- set items = [] -%}
+      {%- for entity in wm_users_present -%}
+      {%-   for f in wm_dotfiles -%}
+      {%-     set _ = items.append({'entity': entity, 'src': f}) -%}
+      {%-   endfor -%}
+      {%- endfor -%}
+      {{ items }}
+
+- name: "DESK_WM_CONFIGURE - Copy wm config files"
+  ansible.builtin.copy:
+    src: "{{ role_path }}/files/dotfiles/{{ item.src }}"
+    dest: "{{ item.entity.home }}/{{ item.src }}"
+    owner: "{{ item.entity.name }}"
+    group: "{{ item.entity.group | default(item.entity.name) }}"
+    mode: "0600"
+  loop: "{{ wm_copy_items }}"
+  when: item.src == '.config/picom.conf'
+  loop_control:
+    label: "{{ item.entity.name }}/{{ item.src }}"
+  become: true
+
+- name: "DESK_WM_CONFIGURE - Copy wm config directories"
+  ansible.builtin.copy:
+    src: "{{ role_path }}/files/dotfiles/{{ item.src }}"
+    dest: "{{ item.entity.home }}/{{ item.src }}"
+    owner: "{{ item.entity.name }}"
+    group: "{{ item.entity.group | default(item.entity.name) }}"
+    mode: "0700"
+  loop: "{{ wm_copy_items }}"
+  when: item.src != '.config/picom.conf'
+  loop_control:
+    label: "{{ item.entity.name }}/{{ item.src }}"
+  become: true

@@ -1,0 +1,28 @@
+---
+- name: "DESK_BRAVE_INSTALL - Install prereq packages"
+  ansible.builtin.apt:
+    name: "{{ brave_packages }}"
+    state: present
+    update_cache: true
+  become: true
+
+- name: "DESK_BRAVE_INSTALL - Download Brave GPG key"
+  ansible.builtin.get_url:
+    url: "{{ brave_repo_url }}brave-browser-archive-keyring.gpg"
+    dest: "{{ brave_keyring_path }}"
+    mode: "0644"
+  become: true
+
+- name: "DESK_BRAVE_INSTALL - Add Brave repository"
+  ansible.builtin.apt_repository:
+    repo: "deb [signed-by={{ brave_keyring_path }}] {{ brave_repo_url }} stable main"
+    filename: "{{ brave_apt_filename }}"
+    state: present
+  become: true
+
+- name: "DESK_BRAVE_INSTALL - Install Brave browser"
+  ansible.builtin.apt:
+    name: brave-browser
+    state: present
+    update_cache: true
+  become: true

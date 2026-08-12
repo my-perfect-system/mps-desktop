@@ -1,0 +1,3 @@
+---
+- name: "DESK_SPOTIFY_MAIN - Install Spotify client"
+  ansible.builtin.include_tasks: install.yml

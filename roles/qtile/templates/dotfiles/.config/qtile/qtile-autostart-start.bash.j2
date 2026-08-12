@@ -1,0 +1,38 @@
+#!/usr/bin/env bash
+
+# Kill old instances
+# (Cleaned up: hardcoded SNIPPETS=~/mps/snippets removed)
+
+# Setup X (xrandr)
+{% for d in qtile_autostart_displays %}
+{% if d.primary | default(false) %}
+xrandr --output "{{ d.output }}" --primary --auto --mode {{ d.mode }} --pos {{ d.position }} --scale {{ d.scale }} --rotate normal \
+{% else %}
+    --output "{{ d.output }}" --mode {{ d.mode }} --pos {{ d.position }} --scale {{ d.scale }} --rotate normal
+{% endif %}
+{% endfor %}
+xset s off &
+xset -dpms &
+{{ qtile_autostart_xset_rate }} &
+setxkbmap {{ qtile_autostart_keyboard }} &
+
+# dconf settings
+dconf load / <~/.config/dconf/config.ini
+
+# Tray apps and daemons
+KBDMAPPER=kanata
+COMPOSITOR=picom
+NETMON=nm-applet
+DUNST=dunst
+VOLMON=volumeicon
+SCRATCHTERM=tilda
+SYSMON=gnome-system-monitor
+POLKIT=lxpolkit
+MAILTRAY=birdtray
+ALL="$COMPOSITOR $NETMON $VOLMON $DUNST $SYSMON $POLKIT"
+$(sleep 3 && "$COMPOSITOR" --backend xrender) &
+"$NETMON" &
+"$VOLMON" &
+"$DUNST" &
+"$KANATA" &
+"$SYSMON" "$POLKIT" &

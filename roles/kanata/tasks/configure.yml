@@ -1,0 +1,53 @@
+---
+- name: "DESK_KANATA_CONFIGURE - Copy kanata config per user"
+  ansible.builtin.copy:
+    src: "{{ role_path }}/files/dotfiles/.config/kanata/"
+    dest: "{{ entity.home }}/.config/kanata/"
+    owner: "{{ entity.name }}"
+    group: "{{ entity.group | default(entity.name) }}"
+    mode: "0600"
+  loop: "{{ kanata_users_present }}"
+  loop_control:
+    loop_var: entity
+    label: "{{ entity.name }}"
+
+- name: "DESK_KANATA_CONFIGURE - Ensure global systemd user dir exists"
+  ansible.builtin.file:
+    path: /etc/systemd/user
+    state: directory
+    owner: root
+    group: root
+    mode: "0755"
+
+- name: "DESK_KANATA_CONFIGURE - Enable linger for each user"
+  ansible.builtin.command:
+    cmd: loginctl enable-linger {{ entity.name }}
+  changed_when: true
+  loop: "{{ kanata_users_present }}"
+  loop_control:
+    loop_var: entity
+    label: "{{ entity.name }}"
+
+- name: "DESK_KANATA_CONFIGURE - Install kanata systemd user service (global)"
+  ansible.builtin.copy:
+    dest: /etc/systemd/user/kanata.service
+    owner: root
+    group: root
+    mode: "0644"
+    content: |
+      [Unit]
+      Description=Kanata Keyboard Remapper (User)
+      Documentation=https://github.com/jtroo/kanata
+      After=default.target
+
+      [Service]
+      Type=simple
+      ExecStart=%h/.cargo/bin/kanata -c {{ kanata_config_path | regex_replace('^~', '%h') }}
+      Restart=on-failure
+
+      [Install]
+      WantedBy=default.target
+
+- name: "DESK_KANATA_CONFIGURE - Enable kanata service globally"
+  ansible.builtin.command: systemctl --global enable kanata.service
+  changed_when: true

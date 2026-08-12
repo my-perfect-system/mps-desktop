@@ -1,0 +1,5 @@
+---
+- name: "DESK_LIGHTDM_CONFIGURE - No per-user configuration for lightdm"
+  ansible.builtin.debug:
+    msg: "lightdm role has no per-user configure step"
+  when: false
