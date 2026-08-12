@@ -1,0 +1,7 @@
+---
+# Fragment for the refactor pass.
+# Compiles into changelogs/changelog.yaml at release time.
+minor_changes:
+  - |
+    9 stub `configure.yml` files deleted from simple desktop roles (`brave`, `firefox`, `gnometools`, `grubmenu`, `lightdm`, `plymouth`, `spotify`, `thunderbird`, `x11`). Each was a `when: false` debug stub, and each was already unreferenced from main.yml — pure dead-code removal, no behavior change.
+

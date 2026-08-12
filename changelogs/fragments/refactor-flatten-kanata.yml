@@ -1,0 +1,7 @@
+---
+# Fragment for the refactor pass.
+# Compiles into changelogs/changelog.yaml at release time.
+minor_changes:
+  - |
+    `mps-desktop/kanata` flattened: install.yml (118L, per-user rustup + cargo install + udev rules + systemd user service) and configure.yml (59L, .config/kanata/ tree + kanata.service + enable-linger loop) inlined into a single `tasks/main.yml`. Inline `block:` pattern keeps per-user loops scoped to the right user.
+
