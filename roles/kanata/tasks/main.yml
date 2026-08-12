@@ -1,6 +1,176 @@
 ---
-- name: Install kanata system prerequisites
-  ansible.builtin.include_tasks: install.yml
+- name: Install kanata apt packages
+  ansible.builtin.package:
+    name: "{{ kanata_packages }}"
+    state: present
+  become: true
 
-- name: Configure per-user kanata service
-  ansible.builtin.include_tasks: configure.yml
+- name: Ensure uinput group exists
+  ansible.builtin.group:
+    name: uinput
+    state: present
+  become: true
+
+- name: Add users to input and uinput groups
+  ansible.builtin.user:
+    name: "{{ entity.name }}"
+    groups:
+      - input
+      - uinput
+    append: true
+  loop: "{{ identity_users_resolved }}"
+  loop_control:
+    loop_var: entity
+    label: "{{ entity.name }}"
+  when:
+    - entity.user_roles.desktop_kanata | default(false)
+    - entity.state == 'present'
+  become: true
+
+- name: Deploy kanata udev rule
+  ansible.builtin.copy:
+    dest: "{{ kanata_udev_rule_path }}"
+    content: "{{ kanata_udev_rule_content }}"
+    owner: root
+    group: root
+    mode: "0644"
+  become: true
+
+- name: Deploy kanata modules-load config
+  ansible.builtin.copy:
+    dest: "{{ kanata_modules_load_path }}"
+    content: "{{ kanata_modules_load_content }}"
+    owner: root
+    group: root
+    mode: "0644"
+  become: true
+
+- name: Reload udev rules
+  ansible.builtin.command: udevadm control --reload-rules
+  changed_when: true
+  become: true
+
+- name: Trigger udev rules
+  ansible.builtin.command: udevadm trigger
+  changed_when: true
+  become: true
+
+- name: Load uinput kernel module
+  ansible.builtin.command: modprobe uinput
+  changed_when: true
+  become: true
+
+- name: Ensure rustup tools directory exists
+  ansible.builtin.file:
+    path: /usr/share/mps/tools/rustup
+    state: directory
+    owner: root
+    group: root
+    mode: "0755"
+  become: true
+
+- name: Download rustup installer for kanata
+  ansible.builtin.get_url:
+    url: https://sh.rustup.rs
+    dest: /usr/share/mps/tools/rustup/rustup.sh
+    mode: "0755"
+  become: true
+
+- name: Install rustup per user for kanata
+  ansible.builtin.command:
+    cmd: sudo -u {{ entity.name }} /bin/bash -c '/usr/share/mps/tools/rustup/rustup.sh -y --default-toolchain stable'
+    creates: "{{ entity.home }}/.cargo/bin/cargo"
+  loop: "{{ identity_users_resolved }}"
+  loop_control:
+    loop_var: entity
+    label: "{{ entity.name }}"
+  when:
+    - entity.user_roles.desktop_kanata | default(false)
+    - entity.state == 'present'
+
+- name: Ensure per-user .cargo directory has correct ownership
+  ansible.builtin.file:
+    path: "{{ entity.home }}/.cargo"
+    state: directory
+    owner: "{{ entity.name }}"
+    group: "{{ entity.group | default(entity.name) }}"
+    mode: "0700"
+    recurse: true
+  loop: "{{ identity_users_resolved }}"
+  loop_control:
+    loop_var: entity
+    label: "{{ entity.name }}"
+  when:
+    - entity.user_roles.desktop_kanata | default(false)
+    - entity.state == 'present'
+
+- name: Install kanata via cargo per user
+  ansible.builtin.command:
+    cmd: sudo -u {{ entity.name }} /bin/bash -c 'PATH="{{ entity.home }}/.cargo/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin" {{ entity.home }}/.cargo/bin/cargo install kanata --features {{ kanata_cargo_features }} --force'
+    creates: "{{ entity.home }}/.cargo/bin/kanata"
+  loop: "{{ identity_users_resolved }}"
+  loop_control:
+    loop_var: entity
+    label: "{{ entity.name }}"
+  when:
+    - entity.user_roles.desktop_kanata | default(false)
+    - entity.state == 'present'
+
+- name: Deploy per-user kanata configuration tree
+  ansible.builtin.copy:
+    src: "{{ role_path }}/files/dotfiles/.config/kanata/"
+    dest: "{{ entity.home }}/.config/kanata/"
+    owner: "{{ entity.name }}"
+    group: "{{ entity.group | default(entity.name) }}"
+    mode: "0600"
+  loop: "{{ identity_users_resolved }}"
+  loop_control:
+    loop_var: entity
+    label: "{{ entity.name }}"
+  when:
+    - entity.user_roles.desktop_kanata | default(false)
+    - entity.state == 'present'
+
+- name: Ensure /etc/systemd/user directory exists
+  ansible.builtin.file:
+    path: /etc/systemd/user
+    state: directory
+    owner: root
+    group: root
+    mode: "0755"
+
+- name: Enable lingering for kanata users
+  ansible.builtin.command:
+    cmd: loginctl enable-linger {{ entity.name }}
+  changed_when: true
+  loop: "{{ identity_users_resolved }}"
+  loop_control:
+    loop_var: entity
+    label: "{{ entity.name }}"
+  when:
+    - entity.user_roles.desktop_kanata | default(false)
+    - entity.state == 'present'
+
+- name: Deploy kanata systemd user service
+  ansible.builtin.copy:
+    dest: /etc/systemd/user/kanata.service
+    owner: root
+    group: root
+    mode: "0644"
+    content: |
+      [Unit]
+      Description=Kanata Keyboard Remapper (User)
+      Documentation=https://github.com/jtroo/kanata
+      After=default.target
+
+      [Service]
+      Type=simple
+      ExecStart=%h/.cargo/bin/kanata -c {{ kanata_config_path | regex_replace('^~', '%h') }}
+      Restart=on-failure
+
+      [Install]
+      WantedBy=default.target
+
+- name: Enable kanata service globally
+  ansible.builtin.command: systemctl --global enable kanata.service
+  changed_when: true

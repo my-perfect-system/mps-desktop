@@ -1,5 +1,0 @@
----
-- name: No per-user configuration for plymouth
-  ansible.builtin.debug:
-    msg: "plymouth role has no per-user configure step"
-  when: false
