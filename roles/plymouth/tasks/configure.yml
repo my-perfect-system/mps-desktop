@@ -1,5 +1,5 @@
 ---
-- name: "DESK_PLYMOUTH_CONFIGURE - No per-user configuration for plymouth"
+- name: No per-user configuration for plymouth
   ansible.builtin.debug:
     msg: "plymouth role has no per-user configure step"
   when: false

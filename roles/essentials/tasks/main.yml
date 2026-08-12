@@ -1,8 +1,8 @@
 ---
-- name: ESSENTIALS - Compute per-user facts
+- name: Compute essentials per-user facts
   ansible.builtin.include_tasks: facts.yml
-- name: "DESK_ESSENTIALS_MAIN - Install system packages"
+- name: Install system packages and images
   ansible.builtin.include_tasks: install.yml
 
-- name: "DESK_ESSENTIALS_MAIN - Configure per-user dotfiles and system images"
+- name: Configure per-user dotfiles and system images
   ansible.builtin.include_tasks: configure.yml

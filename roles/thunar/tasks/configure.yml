@@ -1,5 +1,5 @@
 ---
-- name: "DESK_THUNAR_CONFIGURE - Copy thunar/xfce4 dotfiles"
+- name: Copy per-user thunar dotfiles
   ansible.builtin.copy:
     src: "{{ role_path }}/files/dotfiles/{{ item.src }}"
     dest: "{{ item.entity.home }}/{{ item.src }}"

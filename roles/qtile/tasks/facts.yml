@@ -1,5 +1,5 @@
 ---
-- name: "DESK_QTILE_CONFIGURE - Build wallpaper dict for globals.py"
+- name: Build qtile wallpaper dictionary for key bindings
   ansible.builtin.set_fact:
     qtile_wallpaper_dict: >-
       {%- set d = {} -%}
@@ -20,7 +20,7 @@
       {%- endfor -%}
       {{ d }}
 
-- name: "DESK_QTILE_CONFIGURE - Build config template items per user"
+- name: Build qtile config template items per user
   ansible.builtin.set_fact:
     qtile_config_template_items: >-
       {%- set items = [] -%}
@@ -48,7 +48,7 @@
       {%- endfor -%}
       {{ items }}
 
-- name: "DESK_QTILE_CONFIGURE - Build user script copy items per user"
+- name: Build qtile user script items per user
   ansible.builtin.set_fact:
     qtile_user_script_items: >-
       {%- set items = [] -%}

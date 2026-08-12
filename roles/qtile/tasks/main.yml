@@ -1,8 +1,8 @@
 ---
-- name: QTILE - Compute per-user facts
+- name: Compute qtile per-user facts
   ansible.builtin.include_tasks: facts.yml
-- name: "DESK_QTILE_MAIN - Install qtile (packages, repo, venv, xsession, system scripts)"
+- name: Install qtile system and per-user prerequisites
   ansible.builtin.include_tasks: install.yml
 
-- name: "DESK_QTILE_MAIN - Configure per-user qtile config + scripts"
+- name: Configure per-user qtile dotfiles
   ansible.builtin.include_tasks: configure.yml

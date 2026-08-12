@@ -1,6 +1,6 @@
 ---
-- name: "DESK_KANATA_MAIN - Install kanata binary and uinput setup"
+- name: Install kanata system prerequisites
   ansible.builtin.include_tasks: install.yml
 
-- name: "DESK_KANATA_MAIN - Configure per-user kanata config and systemd service"
+- name: Configure per-user kanata service
   ansible.builtin.include_tasks: configure.yml

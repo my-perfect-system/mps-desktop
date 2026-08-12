@@ -1,11 +1,11 @@
 ---
-- name: "DESK_PLYMOUTH_INSTALL - Install plymouth packages"
+- name: Install plymouth packages
   ansible.builtin.apt:
     name: "{{ plymouth_packages }}"
     state: present
   become: true
 
-- name: "DESK_PLYMOUTH_INSTALL - Clone 'text' theme as {{ plymouth_default_theme }}"
+- name: Copy plymouth theme files
   ansible.builtin.copy:
     src: "{{ plymouth_themes_dir }}/text/"
     dest: "{{ plymouth_themes_dir }}/{{ plymouth_default_theme }}/"
@@ -14,7 +14,7 @@
     mode: "0755"
   become: true
 
-- name: "DESK_PLYMOUTH_INSTALL - Copy renamed .plymouth script"
+- name: Copy plymouth .plymouth file
   ansible.builtin.copy:
     src: "{{ plymouth_themes_dir }}/text/text.plymouth"
     dest: "{{ plymouth_themes_dir }}/{{ plymouth_default_theme }}/{{ plymouth_default_theme }}.plymouth"
@@ -39,14 +39,14 @@
 #     replace: "{{ plymouth_default_theme }}"
 #   become: true
 
-- name: "DESK_PLYMOUTH_INSTALL - Replace 'text' in .plymouth"
+- name: Replace 'text' in .plymouth with default theme name
   ansible.builtin.replace:
     path: "{{ plymouth_themes_dir }}/{{ plymouth_default_theme }}/{{ plymouth_default_theme }}.plymouth"
     regexp: "text"
     replace: "{{ plymouth_default_theme }}"
   become: true
 
-- name: "DESK_PLYMOUTH_INSTALL - Copy background image from GRUB theme"
+- name: Copy bootsplash background image
   ansible.builtin.copy:
     src: "/boot/grub/themes/{{ plymouth_default_theme }}/background.png"
     dest: "{{ plymouth_themes_dir }}/{{ plymouth_default_theme }}/"

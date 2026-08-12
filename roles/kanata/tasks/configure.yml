@@ -1,5 +1,5 @@
 ---
-- name: "DESK_KANATA_CONFIGURE - Copy kanata config per user"
+- name: Deploy per-user kanata configuration tree
   ansible.builtin.copy:
     src: "{{ role_path }}/files/dotfiles/.config/kanata/"
     dest: "{{ entity.home }}/.config/kanata/"
@@ -14,7 +14,7 @@
     - entity.user_roles.desktop_kanata | default(false)
     - entity.state == 'present'
 
-- name: "DESK_KANATA_CONFIGURE - Ensure global systemd user dir exists"
+- name: Ensure /etc/systemd/user directory exists
   ansible.builtin.file:
     path: /etc/systemd/user
     state: directory
@@ -22,7 +22,7 @@
     group: root
     mode: "0755"
 
-- name: "DESK_KANATA_CONFIGURE - Enable linger for each user"
+- name: Enable lingering for kanata users
   ansible.builtin.command:
     cmd: loginctl enable-linger {{ entity.name }}
   changed_when: true
@@ -34,7 +34,7 @@
     - entity.user_roles.desktop_kanata | default(false)
     - entity.state == 'present'
 
-- name: "DESK_KANATA_CONFIGURE - Install kanata systemd user service (global)"
+- name: Deploy kanata systemd user service
   ansible.builtin.copy:
     dest: /etc/systemd/user/kanata.service
     owner: root
@@ -54,6 +54,6 @@
       [Install]
       WantedBy=default.target
 
-- name: "DESK_KANATA_CONFIGURE - Enable kanata service globally"
+- name: Enable kanata service globally
   ansible.builtin.command: systemctl --global enable kanata.service
   changed_when: true

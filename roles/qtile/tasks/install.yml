@@ -1,11 +1,11 @@
 ---
-- name: "DESK_QTILE_INSTALL - Install qtile apt packages"
+- name: Install qtile apt packages
   ansible.builtin.apt:
     name: "{{ qtile_packages }}"
     state: present
   become: true
 
-- name: "DESK_QTILE_INSTALL - Create qtile venv + clone source (per user)"
+- name: Create per-user qtile virtualenv
   ansible.builtin.command:
     cmd: sudo -u {{ entity.name }} python3 -m venv "{{ entity.home }}/.venvs/qtile"
     creates: "{{ entity.home }}/.venvs/qtile"
@@ -17,7 +17,7 @@
     - entity.user_roles.desktop_qtile | default(false)
     - entity.state == 'present'
 
-- name: "DESK_QTILE_INSTALL - Clone qtile repo (per user)"
+- name: Clone qtile source repository per user
   ansible.builtin.command:
     cmd: sudo -u {{ entity.name }} git clone --single-branch --branch "{{ qtile_repo_version }}" "{{ qtile_repo_url }}" "{{ qtile_repo_dest | regex_replace('^~', entity.home) }}"
     creates: "{{ qtile_repo_dest | regex_replace('^~', entity.home) }}"
@@ -29,7 +29,7 @@
     - entity.user_roles.desktop_qtile | default(false)
     - entity.state == 'present'
 
-- name: "DESK_QTILE_INSTALL - Install qtile into venv (per user)"
+- name: Install qtile from source per user
   ansible.builtin.command:
     cmd: sudo -u {{ entity.name }} "{{ entity.home }}/.venvs/qtile/bin/pip" install "{{ qtile_repo_dest | regex_replace('^~', entity.home) }}"
     creates: "{{ entity.home }}/.venvs/qtile/bin/qtile"
@@ -41,7 +41,7 @@
     - entity.user_roles.desktop_qtile | default(false)
     - entity.state == 'present'
 
-- name: "DESK_QTILE_INSTALL - Install psutil into venv (per user)"
+- name: Install psutil into qtile venv per user
   ansible.builtin.command:
     cmd: sudo -u {{ entity.name }} "{{ entity.home }}/.venvs/qtile/bin/pip" install psutil
   loop: "{{ identity_users_resolved }}"
@@ -52,7 +52,7 @@
     - entity.user_roles.desktop_qtile | default(false)
     - entity.state == 'present'
 
-- name: "DESK_QTILE_INSTALL - Fix ownership of qtile venv"
+- name: Ensure per-user qtile venv has correct ownership
   ansible.builtin.file:
     path: "{{ entity.home }}/.venvs/qtile"
     state: directory
@@ -68,7 +68,7 @@
     - entity.user_roles.desktop_qtile | default(false)
     - entity.state == 'present'
 
-- name: "DESK_QTILE_INSTALL - Ensure xsessions dir exists"
+- name: Ensure qtile xsessions directory exists
   ansible.builtin.file:
     path: "{{ qtile_xsessions_dir }}"
     state: directory
@@ -77,7 +77,7 @@
     mode: "0755"
   become: true
 
-- name: "DESK_QTILE_INSTALL - Copy xsession .desktop file"
+- name: Deploy qtile xsession desktop file
   ansible.builtin.copy:
     src: "{{ role_path }}/files/etc/qtile.desktop"
     dest: "{{ qtile_xsessions_path }}"
@@ -86,7 +86,7 @@
     mode: "0644"
   become: true
 
-- name: "DESK_QTILE_INSTALL - Ensure /usr/local/bin exists"
+- name: Ensure qtile local bin directory exists
   ansible.builtin.file:
     path: "{{ qtile_local_bin_dir }}"
     state: directory
@@ -95,7 +95,7 @@
     mode: "0755"
   become: true
 
-- name: "DESK_QTILE_INSTALL - Copy qtile scripts to /usr/local/bin"
+- name: Deploy qtile static helper scripts
   ansible.builtin.copy:
     src: "{{ role_path }}/files/scripts/{{ item }}"
     dest: "{{ qtile_local_bin_dir }}/{{ item }}"
@@ -105,7 +105,7 @@
   loop: "{{ qtile_local_bin_scripts | difference(['qtile-startup.bash', 'qtile-reload.bash', 'qtile-restart.bash']) }}"
   become: true
 
-- name: "DESK_QTILE_INSTALL - Render qtile-startup.bash template"
+- name: Render qtile-startup.bash script
   ansible.builtin.template:
     src: "{{ role_path }}/templates/scripts/qtile-startup.bash.j2"
     dest: "{{ qtile_local_bin_dir }}/qtile-startup.bash"
@@ -114,7 +114,7 @@
     mode: "0755"
   become: true
 
-- name: "DESK_QTILE_INSTALL - Render qtile-reload.bash template"
+- name: Render qtile-reload.bash script
   ansible.builtin.template:
     src: "{{ role_path }}/templates/scripts/qtile-reload.bash.j2"
     dest: "{{ qtile_local_bin_dir }}/qtile-reload.bash"
@@ -123,7 +123,7 @@
     mode: "0755"
   become: true
 
-- name: "DESK_QTILE_INSTALL - Render qtile-restart.bash template"
+- name: Render qtile-restart.bash script
   ansible.builtin.template:
     src: "{{ role_path }}/templates/scripts/qtile-restart.bash.j2"
     dest: "{{ qtile_local_bin_dir }}/qtile-restart.bash"

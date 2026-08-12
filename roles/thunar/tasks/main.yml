@@ -1,8 +1,8 @@
 ---
-- name: THUNAR - Compute per-user facts
+- name: Compute thunar per-user facts
   ansible.builtin.include_tasks: facts.yml
-- name: "DESK_THUNAR_MAIN - Install thunar packages"
+- name: Install thunar and xfce helpers
   ansible.builtin.include_tasks: install.yml
 
-- name: "DESK_THUNAR_MAIN - Configure per-user thunar dotfiles"
+- name: Configure per-user thunar dotfiles
   ansible.builtin.include_tasks: configure.yml

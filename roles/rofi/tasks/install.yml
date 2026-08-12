@@ -1,11 +1,11 @@
 ---
-- name: "DESK_ROFI_INSTALL - Install rofi packages"
+- name: Install rofi and dependencies
   ansible.builtin.apt:
     name: "{{ rofi_packages }}"
     state: present
   become: true
 
-- name: "DESK_ROFI_INSTALL - Ensure themes dir exists"
+- name: Ensure rofi themes directory exists
   ansible.builtin.file:
     path: "{{ rofi_themes_dir }}"
     state: directory
@@ -14,7 +14,7 @@
     mode: "0755"
   become: true
 
-- name: "DESK_ROFI_INSTALL - Deploy rofi themes to /usr/share/rofi/themes"
+- name: Deploy rofi themes
   ansible.builtin.copy:
     src: "{{ role_path }}/files/dotfiles/.config/rofi/themes/{{ item }}"
     dest: "{{ rofi_themes_dir }}/{{ item }}"

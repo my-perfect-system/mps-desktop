@@ -1,5 +1,5 @@
 ---
-- name: "DESK_WM_CONFIGURE - Build copy tasks per user"
+- name: Build wm dotfile copy items per user
   ansible.builtin.set_fact:
     wm_copy_items: >-
       {%- set items = [] -%}

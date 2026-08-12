@@ -1,5 +1,5 @@
 ---
-- name: "DESK_ESSENTIALS_CONFIGURE - Copy GTK config files"
+- name: Copy GTK config files (0600 mode)
   ansible.builtin.copy:
     src: "{{ role_path }}/files/dotfiles/{{ item.src }}"
     dest: "{{ item.entity.home }}/{{ item.src }}"
@@ -11,7 +11,7 @@
   loop_control:
     label: "{{ item.entity.name }}/{{ item.src }}"
 
-- name: "DESK_ESSENTIALS_CONFIGURE - Copy GTK config directories"
+- name: Copy GTK config directories (0700 mode)
   ansible.builtin.copy:
     src: "{{ role_path }}/files/dotfiles/{{ item.src }}"
     dest: "{{ item.entity.home }}/{{ item.src }}"
@@ -23,7 +23,7 @@
   loop_control:
     label: "{{ item.entity.name }}/{{ item.src }}"
 
-- name: "DESK_ESSENTIALS_CONFIGURE - Copy gedit config"
+- name: Copy gedit config per user
   ansible.builtin.copy:
     src: "{{ role_path }}/files/dotfiles/{{ item.src }}"
     dest: "{{ item.entity.home }}/{{ item.src | dirname }}/"
@@ -34,7 +34,7 @@
   loop_control:
     label: "{{ item.entity.name }}/{{ item.src }}"
 
-- name: "DESK_ESSENTIALS_CONFIGURE - Copy dconf config"
+- name: Copy dconf config per user
   ansible.builtin.copy:
     src: "{{ role_path }}/files/dotfiles/{{ item.src }}"
     dest: "{{ item.entity.home }}/{{ item.src | dirname }}/"

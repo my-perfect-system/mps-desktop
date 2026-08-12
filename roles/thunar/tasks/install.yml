@@ -1,11 +1,11 @@
 ---
-- name: "DESK_THUNAR_INSTALL - Install thunar core packages"
+- name: Install thunar packages
   ansible.builtin.apt:
     name: "{{ thunar_packages }}"
     state: present
   become: true
 
-- name: "DESK_THUNAR_INSTALL - Install XFCE4 packages"
+- name: Install thunar xfce support packages
   ansible.builtin.apt:
     name: "{{ thunar_xfce_packages }}"
     state: present

@@ -1,5 +1,5 @@
 ---
-- name: "DESK_WM_CONFIGURE - Copy wm config files"
+- name: Copy per-user wm config files (0600 mode)
   ansible.builtin.copy:
     src: "{{ role_path }}/files/dotfiles/{{ item.src }}"
     dest: "{{ item.entity.home }}/{{ item.src }}"
@@ -12,7 +12,7 @@
     label: "{{ item.entity.name }}/{{ item.src }}"
   become: true
 
-- name: "DESK_WM_CONFIGURE - Copy wm config directories"
+- name: Copy per-user wm scripts (0700 mode)
   ansible.builtin.copy:
     src: "{{ role_path }}/files/dotfiles/{{ item.src }}"
     dest: "{{ item.entity.home }}/{{ item.src }}"

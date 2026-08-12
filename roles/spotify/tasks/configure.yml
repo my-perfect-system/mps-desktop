@@ -1,5 +1,5 @@
 ---
-- name: "DESK_SPOTIFY_CONFIGURE - No per-user configuration for spotify"
+- name: No per-user configuration for Spotify
   ansible.builtin.debug:
     msg: "spotify role has no per-user configure step"
   when: false

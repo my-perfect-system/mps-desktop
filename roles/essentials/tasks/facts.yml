@@ -1,5 +1,5 @@
 ---
-- name: "DESK_ESSENTIALS_CONFIGURE - Build GTK copy tasks per user"
+- name: Build gtk dotfile copy items per user
   ansible.builtin.set_fact:
     essentials_gtk_copy_items: >-
       {%- set items = [] -%}
@@ -10,7 +10,7 @@
       {%- endfor -%}
       {{ items }}
 
-- name: "DESK_ESSENTIALS_CONFIGURE - Build gedit copy tasks per user"
+- name: Build gedit dotfile copy items per user
   ansible.builtin.set_fact:
     essentials_gedit_copy_items: >-
       {%- set items = [] -%}
@@ -21,7 +21,7 @@
       {%- endfor -%}
       {{ items }}
 
-- name: "DESK_ESSENTIALS_CONFIGURE - Build dconf copy tasks per user"
+- name: Build dconf dotfile copy items per user
   ansible.builtin.set_fact:
     essentials_dconf_copy_items: >-
       {%- set items = [] -%}

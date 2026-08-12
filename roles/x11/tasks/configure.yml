@@ -1,5 +1,5 @@
 ---
-- name: "DESK_X11_CONFIGURE - No per-user configuration for x11"
+- name: No per-user configuration for X11
   ansible.builtin.debug:
     msg: "x11 role has no per-user configure step"
   when: false

@@ -1,23 +1,23 @@
 ---
-- name: "DESK_ESSENTIALS_INSTALL - Install base desktop packages"
+- name: Install base desktop packages
   ansible.builtin.apt:
     name: "{{ essentials_packages_base }}"
     state: present
   become: true
 
-- name: "DESK_ESSENTIALS_INSTALL - Install sound stack packages"
+- name: Install sound stack packages
   ansible.builtin.apt:
     name: "{{ essentials_packages_sound }}"
     state: present
   become: true
 
-- name: "DESK_ESSENTIALS_INSTALL - Install XDG utility packages"
+- name: Install XDG utility packages
   ansible.builtin.apt:
     name: "{{ essentials_packages_xdg }}"
     state: present
   become: true
 
-- name: "DESK_ESSENTIALS_INSTALL - Ensure images target dir exists"
+- name: Ensure images target dir exists
   ansible.builtin.file:
     path: "{{ essentials_bootsplash_dst | dirname }}"
     state: directory
@@ -26,7 +26,7 @@
     mode: "0755"
   become: true
 
-- name: "DESK_ESSENTIALS_INSTALL - Ensure wallpapers target dir exists"
+- name: Ensure wallpapers target dir exists
   ansible.builtin.file:
     path: "{{ essentials_wallpapers_dir }}"
     state: directory
@@ -35,7 +35,7 @@
     mode: "0755"
   become: true
 
-- name: "DESK_ESSENTIALS_INSTALL - Copy bootsplash image"
+- name: Copy bootsplash image
   ansible.builtin.copy:
     src: "{{ role_path }}/files/dotfiles/images/{{ essentials_bootsplash_src }}"
     dest: "{{ essentials_bootsplash_dst }}"
@@ -44,7 +44,7 @@
     mode: "0644"
   become: true
 
-- name: "DESK_ESSENTIALS_INSTALL - Copy wallpapers"
+- name: Copy wallpapers
   ansible.builtin.copy:
     src: "{{ role_path }}/files/dotfiles/wallpaper/{{ item }}"
     dest: "{{ essentials_wallpapers_dir }}/{{ item }}"

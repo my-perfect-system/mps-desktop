@@ -1,5 +1,5 @@
 ---
-- name: "DESK_THUNDERBIRD_INSTALL - Install thunderbird"
+- name: Install Thunderbird package
   ansible.builtin.apt:
     name: thunderbird
     state: present

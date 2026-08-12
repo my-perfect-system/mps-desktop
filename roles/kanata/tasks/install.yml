@@ -1,17 +1,17 @@
 ---
-- name: "DESK_KANATA_INSTALL - Install required apt packages"
+- name: Install kanata apt packages
   ansible.builtin.apt:
     name: "{{ kanata_packages }}"
     state: present
   become: true
 
-- name: "DESK_KANATA_INSTALL - Ensure uinput group exists"
+- name: Ensure uinput group exists
   ansible.builtin.group:
     name: uinput
     state: present
   become: true
 
-- name: "DESK_KANATA_INSTALL - Add present users to input and uinput groups"
+- name: Add users to input and uinput groups
   ansible.builtin.user:
     name: "{{ entity.name }}"
     groups:
@@ -27,7 +27,7 @@
     - entity.state == 'present'
   become: true
 
-- name: "DESK_KANATA_INSTALL - Install udev rule for kanata"
+- name: Deploy kanata udev rule
   ansible.builtin.copy:
     dest: "{{ kanata_udev_rule_path }}"
     content: "{{ kanata_udev_rule_content }}"
@@ -36,7 +36,7 @@
     mode: "0644"
   become: true
 
-- name: "DESK_KANATA_INSTALL - Install modules-load.d config for uinput"
+- name: Deploy kanata modules-load config
   ansible.builtin.copy:
     dest: "{{ kanata_modules_load_path }}"
     content: "{{ kanata_modules_load_content }}"
@@ -45,22 +45,22 @@
     mode: "0644"
   become: true
 
-- name: "DESK_KANATA_INSTALL - Reload udev rules"
+- name: Reload udev rules
   ansible.builtin.command: udevadm control --reload-rules
   changed_when: true
   become: true
 
-- name: "DESK_KANATA_INSTALL - Trigger udev to apply rules immediately"
+- name: Trigger udev rules
   ansible.builtin.command: udevadm trigger
   changed_when: true
   become: true
 
-- name: "DESK_KANATA_INSTALL - Load uinput kernel module now"
+- name: Load uinput kernel module
   ansible.builtin.command: modprobe uinput
   changed_when: true
   become: true
 
-- name: "DESK_KANATA_INSTALL - Ensure rustup tools dir exists"
+- name: Ensure rustup tools directory exists
   ansible.builtin.file:
     path: /usr/share/mps/tools/rustup
     state: directory
@@ -69,14 +69,14 @@
     mode: "0755"
   become: true
 
-- name: "DESK_KANATA_INSTALL - Download rustup (if not already present)"
+- name: Download rustup installer for kanata
   ansible.builtin.get_url:
     url: https://sh.rustup.rs
     dest: /usr/share/mps/tools/rustup/rustup.sh
     mode: "0755"
   become: true
 
-- name: "DESK_KANATA_INSTALL - Install rust/cargo (per user, if missing)"
+- name: Install rustup per user for kanata
   ansible.builtin.command:
     cmd: sudo -u {{ entity.name }} /bin/bash -c '/usr/share/mps/tools/rustup/rustup.sh -y --default-toolchain stable'
     creates: "{{ entity.home }}/.cargo/bin/cargo"
@@ -88,7 +88,7 @@
     - entity.user_roles.desktop_kanata | default(false)
     - entity.state == 'present'
 
-- name: "DESK_KANATA_INSTALL - Fix ownership of cargo dir"
+- name: Ensure per-user .cargo directory has correct ownership
   ansible.builtin.file:
     path: "{{ entity.home }}/.cargo"
     state: directory
@@ -104,7 +104,7 @@
     - entity.user_roles.desktop_kanata | default(false)
     - entity.state == 'present'
 
-- name: "DESK_KANATA_INSTALL - Install kanata binary via cargo (per user)"
+- name: Install kanata via cargo per user
   ansible.builtin.command:
     cmd: sudo -u {{ entity.name }} /bin/bash -c 'PATH="{{ entity.home }}/.cargo/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin" {{ entity.home }}/.cargo/bin/cargo install kanata --features {{ kanata_cargo_features }} --force'
   args:

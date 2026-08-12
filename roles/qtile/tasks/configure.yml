@@ -1,5 +1,5 @@
 ---
-- name: "DESK_QTILE_CONFIGURE - Ensure ~/.config/qtile exists for each user"
+- name: Ensure per-user .config/qtile directory exists
   ansible.builtin.file:
     path: "{{ entity.home }}/.config/qtile"
     state: directory
@@ -14,7 +14,7 @@
     - entity.user_roles.desktop_qtile | default(false)
     - entity.state == 'present'
 
-- name: "DESK_QTILE_CONFIGURE - Ensure ~/.local/bin exists for each user"
+- name: Ensure per-user .local/bin directory exists
   ansible.builtin.file:
     path: "{{ entity.home }}/.local/bin"
     state: directory
@@ -29,7 +29,7 @@
     - entity.user_roles.desktop_qtile | default(false)
     - entity.state == 'present'
 
-- name: "DESK_QTILE_CONFIGURE - Render qtile Python config from templates"
+- name: Render per-user qtile config templates
   ansible.builtin.template:
     src: "{{ item.src }}"
     dest: "{{ item.entity.home }}/.config/qtile/{{ item.src | basename | regex_replace('\\.j2$', '') }}"
@@ -40,7 +40,7 @@
   loop_control:
     label: "{{ item.entity.name }}/{{ item.src | basename }}"
   become: true
-- name: "DESK_QTILE_CONFIGURE - Render .xinitrc from template"
+- name: Render per-user .xinitrc
   ansible.builtin.template:
     src: "dotfiles/.config/qtile/.xinitrc.j2"
     dest: "{{ entity.home }}/.xinitrc"
@@ -56,7 +56,7 @@
     - entity.state == 'present'
   become: true
 
-- name: "DESK_QTILE_CONFIGURE - Render .xsessionrc from template"
+- name: Render per-user .xsessionrc
   ansible.builtin.template:
     src: "dotfiles/.config/qtile/.xsessionrc.j2"
     dest: "{{ entity.home }}/.xsessionrc"
@@ -72,7 +72,7 @@
     - entity.state == 'present'
   become: true
 
-- name: "DESK_QTILE_CONFIGURE - Render qtile-autostart-start.bash from template"
+- name: Render per-user qtile-autostart-start.bash script
   ansible.builtin.template:
     src: "dotfiles/.config/qtile/qtile-autostart-start.bash.j2"
     dest: "{{ item.entity.home }}/.local/bin/qtile-autostart-start.bash"
@@ -84,7 +84,7 @@
     label: "{{ item.entity.name }}/qtile-autostart-start.bash"
   become: true
 
-- name: "DESK_QTILE_CONFIGURE - Copy static qtile user scripts to ~/.local/bin"
+- name: Copy per-user qtile helper scripts
   ansible.builtin.copy:
     src: "{{ role_path }}/files/scripts/{{ item.src }}"
     dest: "{{ item.entity.home }}/.local/bin/{{ item.src }}"

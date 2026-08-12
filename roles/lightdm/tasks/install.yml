@@ -1,5 +1,5 @@
 ---
-- name: "DESK_LIGHTDM_INSTALL - Ensure wallpaper dir exists"
+- name: Ensure lightdm wallpapers directory exists
   ansible.builtin.file:
     path: "{{ lightdm_wallpapers_dir }}"
     state: directory
@@ -8,7 +8,7 @@
     mode: "0755"
   become: true
 
-- name: "DESK_LIGHTDM_INSTALL - Ensure lightdm-greeter background wallpaper is set"
+- name: Set lightdm greeter background
   ansible.builtin.lineinfile:
     path: "{{ lightdm_greeter_conf }}"
     regexp: "^background="

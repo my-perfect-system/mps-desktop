@@ -1,3 +1,3 @@
 ---
-- name: "DESK_BRAVE_MAIN - Install Brave browser"
+- name: Install Brave browser
   ansible.builtin.include_tasks: install.yml

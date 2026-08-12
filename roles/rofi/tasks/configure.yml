@@ -1,5 +1,5 @@
 ---
-- name: "DESK_ROFI_CONFIGURE - Copy rofi dotfiles"
+- name: Copy per-user rofi dotfiles
   ansible.builtin.copy:
     src: "{{ role_path }}/files/dotfiles/{{ item.src }}"
     dest: "{{ item.entity.home }}/{{ item.src }}"
@@ -11,7 +11,7 @@
     label: "{{ item.entity.name }}/{{ item.src }}"
   become: true
 
-- name: "DESK_ROFI_CONFIGURE - Ensure ~/.local/bin exists for each user"
+- name: Ensure per-user .local/bin directory exists
   ansible.builtin.file:
     path: "{{ entity.home }}/.local/bin"
     state: directory
@@ -26,7 +26,7 @@
     - entity.user_roles.desktop_rofi | default(false)
     - entity.state == 'present'
 
-- name: "DESK_ROFI_CONFIGURE - Copy rofi boot scripts to ~/.local/bin"
+- name: Copy per-user rofi helper scripts
   ansible.builtin.copy:
     src: "{{ role_path }}/files/scripts/{{ item.src }}"
     dest: "{{ item.entity.home }}/.local/bin/{{ item.src }}"

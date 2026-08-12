@@ -1,5 +1,5 @@
 ---
-- name: "DESK_GRUBMENU_CONFIGURE - No per-user configuration for grubmenu"
+- name: No per-user configuration for grubmenu
   ansible.builtin.debug:
     msg: "grubmenu role has no per-user configure step"
   when: false

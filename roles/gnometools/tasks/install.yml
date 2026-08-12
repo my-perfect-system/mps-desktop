@@ -1,5 +1,5 @@
 ---
-- name: "DESK_GNOMETOOLS_INSTALL - Install gnome tools"
+- name: Install GNOME tools
   ansible.builtin.apt:
     name:
       - gnome-system-monitor
