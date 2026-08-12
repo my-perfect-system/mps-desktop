@@ -1,0 +1,33 @@
+---
+- name: "DESK_ESSENTIALS_CONFIGURE - Build GTK copy tasks per user"
+  ansible.builtin.set_fact:
+    essentials_gtk_copy_items: >-
+      {%- set items = [] -%}
+      {%- for entity in identity_users_resolved if entity.state == 'present' and entity.user_roles.desktop_essentials | default(false) -%}
+      {%-   for f in essentials_dotfiles_gtk -%}
+      {%-     set _ = items.append({'entity': entity, 'src': f}) -%}
+      {%-   endfor -%}
+      {%- endfor -%}
+      {{ items }}
+
+- name: "DESK_ESSENTIALS_CONFIGURE - Build gedit copy tasks per user"
+  ansible.builtin.set_fact:
+    essentials_gedit_copy_items: >-
+      {%- set items = [] -%}
+      {%- for entity in identity_users_resolved if entity.state == 'present' and entity.user_roles.desktop_essentials | default(false) -%}
+      {%-   for f in essentials_dotfiles_gedit -%}
+      {%-     set _ = items.append({'entity': entity, 'src': f}) -%}
+      {%-   endfor -%}
+      {%- endfor -%}
+      {{ items }}
+
+- name: "DESK_ESSENTIALS_CONFIGURE - Build dconf copy tasks per user"
+  ansible.builtin.set_fact:
+    essentials_dconf_copy_items: >-
+      {%- set items = [] -%}
+      {%- for entity in identity_users_resolved if entity.state == 'present' and entity.user_roles.desktop_essentials | default(false) -%}
+      {%-   for f in essentials_dotfiles_dconf -%}
+      {%-     set _ = items.append({'entity': entity, 'src': f}) -%}
+      {%-   endfor -%}
+      {%- endfor -%}
+      {{ items }}

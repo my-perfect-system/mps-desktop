@@ -1,4 +1,6 @@
 ---
+- name: ESSENTIALS - Compute per-user data
+  ansible.builtin.include_tasks: compute.yml
 - name: "DESK_ESSENTIALS_MAIN - Install system packages"
   ansible.builtin.include_tasks: install.yml
 

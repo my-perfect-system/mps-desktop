@@ -1,4 +1,6 @@
 ---
+- name: QTILE - Compute per-user data
+  ansible.builtin.include_tasks: compute.yml
 - name: "DESK_QTILE_MAIN - Install qtile (packages, repo, venv, xsession, system scripts)"
   ansible.builtin.include_tasks: install.yml
 

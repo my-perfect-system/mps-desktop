@@ -1,4 +1,6 @@
 ---
+- name: THUNAR - Compute per-user data
+  ansible.builtin.include_tasks: compute.yml
 - name: "DESK_THUNAR_MAIN - Install thunar packages"
   ansible.builtin.include_tasks: install.yml
 
