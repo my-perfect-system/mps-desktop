@@ -38,6 +38,8 @@ qtile_vpn_admin_host: bks-adm
 qtile_vpn_pub_host: pub-all
 qtile_kanata_state_path: /tmp/kanata.state
 
+qtile_screenlayout_hive_cmd: ""
+
 qtile_autostart_keyboard: de
 qtile_autostart_xset_rate: "xset r rate 250 50"
 qtile_autostart_displays:
