@@ -43,4 +43,4 @@ theme, gnome-tools.
 
 - Browser / system app roles are single-package installs (apt + optional GPG key); kept as `install.yml` + `main.yml` 2-file roles.
 - WM + helper roles are per-user; each has `facts.yml` (set_fact builders) + `install.yml` (system packages) + `configure.yml` (per-user copy loops). Multi-file by design.
-- Per-user loops use `block:` with `loop: "{{ identity_users_resolved | odem_filter_users('desktop_<x>') }}"`.
+- Per-user loops use `block:` with `loop: "{{ identity_users_resolved | odem.base.odem_filter_users('desktop_<x>') }}"`.
